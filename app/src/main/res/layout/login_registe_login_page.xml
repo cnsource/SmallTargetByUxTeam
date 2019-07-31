@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".login_registe.LoginPageActivity">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/headIcon"
+        android:layout_marginTop="-40dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:src="@drawable/ic_login_head_icon"
+        />
+    <EditText
+        android:maxLength="11"
+        android:lines="1"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_login_account"
+        android:layout_marginTop="48dp"
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="账号"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:maxLength="18"
+        android:lines="1"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_login_pwd"
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:hint="密码"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"
+      />
+    <Button
+        android:textSize="20sp"
+        android:background="@drawable/registe_btn"
+        android:text="登录"
+        android:id="@+id/loginbtn"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/lost_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="忘记密码"/>
+        <View
+
+            android:layout_margin="10dp"
+            android:layout_width="2dp"
+            android:layout_height="16dp"
+            android:background="#eee"/>
+        <TextView
+
+            android:id="@+id/user_registe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="新用户注册"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,143 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main_face.MainfacePage"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="7dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#7BB53E">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/self_user_Icon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@mipmap/account_48" />
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/self_sex_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:src="@mipmap/male" />
+
+            <TextView
+                android:id="@+id/self_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/self_sex_icon"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:text="UserName"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/supervision"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/self_username"
+                android:layout_marginLeft="-24dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:text="监督能力"
+                android:textColor="#156899"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/implementation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/supervision"
+                android:layout_marginLeft="-24dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:text="执行能力"
+                android:textColor="#156899"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/aimCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/implementation"
+                android:layout_marginLeft="-24dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:text="目标总数"
+                android:textColor="#156899"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/finishCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/aimCount"
+                android:layout_marginLeft="-24dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/self_user_Icon"
+                android:text="完成数量"
+                android:textColor="#156899"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="7dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@+id/card_content"
+                    android:layout_alignTop="@+id/card_content"
+                    tools:itemCount="4">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/loginOut"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:background="#FF6F59"
+                android:gravity="center"
+                android:text="退出登陆"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>
