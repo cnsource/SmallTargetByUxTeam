@@ -28,13 +28,15 @@ public class LoginPageActivity extends AppCompatActivity {
     private Button loginbtn;
     private TextView lostPwd;
     private TextView userRegiste;
+    private LoginPagePresenter loginPagePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_registe_login_page);
         bindViewControl();
-        new LoginPagePresenter(this).load();
+        loginPagePresenter = new LoginPagePresenter(this);
+        loginPagePresenter.load();
     }
 
     private void bindViewControl() {
@@ -55,7 +57,9 @@ public class LoginPageActivity extends AppCompatActivity {
     public void refreshLoginbtn(boolean bool) {
         loginbtn.setEnabled(bool);
     }
-
+    public void transerParameter(){
+        loginPagePresenter.transerParameter(account.getText().toString(),password.getText().toString());
+    }
     public void bindControlEvent(TextWatcher accountChangeListener, TextWatcher pwdChangeListener, View.OnClickListener clickListener) {
         account.addTextChangedListener(accountChangeListener);
         password.addTextChangedListener(pwdChangeListener);
