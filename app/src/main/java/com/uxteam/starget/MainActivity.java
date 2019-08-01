@@ -6,17 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.uxteam.starget.R;
 import com.uxteam.starget.login_registe.LoginPageActivity;
 import com.uxteam.starget.main_face.MainfacePage;
-import com.uxteam.starget.user_sys_pkg.User;
-import com.uxteam.starget.utils_bmob.MyBmobUtils;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 

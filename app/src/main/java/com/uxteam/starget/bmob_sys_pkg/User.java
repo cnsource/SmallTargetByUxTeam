@@ -1,4 +1,4 @@
-package com.uxteam.starget.user_sys_pkg;
+package com.uxteam.starget.bmob_sys_pkg;
 
 import cn.bmob.v3.BmobUser;
 

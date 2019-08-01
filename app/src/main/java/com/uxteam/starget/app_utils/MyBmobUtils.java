@@ -1,8 +1,8 @@
-package com.uxteam.starget.utils_bmob;
+package com.uxteam.starget.app_utils;
 
 import android.util.Log;
 
-import com.uxteam.starget.user_sys_pkg.User;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
 

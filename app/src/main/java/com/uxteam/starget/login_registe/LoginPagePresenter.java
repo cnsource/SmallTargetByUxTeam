@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import com.uxteam.starget.MainActivity;
 import com.uxteam.starget.R;
 import com.uxteam.starget.main_face.MainfacePage;
-import com.uxteam.starget.user_sys_pkg.User;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
