@@ -18,21 +18,15 @@ import com.uxteam.starget.R;
 
 
 public class PlanPage extends Fragment {
-
-    private PlanPagePresenter mViewModel;
     private SwipeRefreshLayout refreshView;
     private RecyclerView targets;
-
-    public static PlanPage newInstance() {
-        return new PlanPage();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plan_page, container, false);
         bindViewControl(view);
-        new PlanPagePresenter(this).load();
+        new PlanPagePresenter(this).load().closeRefresh(refreshView);
         return view;
     }
 
@@ -46,4 +40,5 @@ public class PlanPage extends Fragment {
         refreshView.setOnRefreshListener(refreshListener);
         targets.setAdapter(targetadt);
     }
+
 }

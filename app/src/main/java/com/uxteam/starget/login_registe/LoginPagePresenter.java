@@ -18,10 +18,10 @@ import cn.bmob.v3.listener.LogInListener;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
-public class LoginPagePresenter implements InputTextChecked{
-    private int nameSize=0;
-    private int pwdSize=0;
-    private int loginResult=0;
+public class LoginPagePresenter implements InputTextChecked {
+    private int nameSize = 0;
+    private int pwdSize = 0;
+    private int loginResult = 0;
     private LoginPageActivity activity;
     private String account;
     private String pwd;
@@ -30,13 +30,13 @@ public class LoginPagePresenter implements InputTextChecked{
         this.activity = activity;
     }
 
-    public void load() {
+    public LoginPagePresenter load() {
         activity.refreshLoginbtn(false);
-        activity.bindControlEvent(initAccountTextChangeListener(),initPwdTextChangeListener(),initClickListener());
-
+        activity.bindControlEvent(initAccountTextChangeListener(), initPwdTextChangeListener(), initClickListener());
+        return this;
     }
 
-    private TextWatcher initAccountTextChangeListener(){
+    private TextWatcher initAccountTextChangeListener() {
         return new TextWatcher() {
 
             @Override
@@ -46,9 +46,9 @@ public class LoginPagePresenter implements InputTextChecked{
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length()==11){
+                if (charSequence.length() == 11) {
                     namesize(1);
-                }else {
+                } else {
                     namesize(0);
                 }
                 changeState();
@@ -62,7 +62,7 @@ public class LoginPagePresenter implements InputTextChecked{
         };
     }
 
-    private TextWatcher initPwdTextChangeListener(){
+    private TextWatcher initPwdTextChangeListener() {
         return new TextWatcher() {
 
             @Override
@@ -72,9 +72,9 @@ public class LoginPagePresenter implements InputTextChecked{
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length()>6){
+                if (charSequence.length() > 6) {
                     pwdsize(1);
-                }else {
+                } else {
                     pwdsize(0);
                 }
                 changeState();
@@ -88,86 +88,86 @@ public class LoginPagePresenter implements InputTextChecked{
         };
     }
 
-    private View.OnClickListener initClickListener(){
+    private View.OnClickListener initClickListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.loginbtn:
                         loginEvent();
                         break;
                     case R.id.lost_pwd:
                         Toast.makeText(activity, "点击了忘记密码按钮", Toast.LENGTH_SHORT).show();
-                        Log.i("Presenter","点击了忘记密码按钮");
+                        Log.i("Presenter", "点击了忘记密码按钮");
                         break;
                     case R.id.user_registe:
-                        Toast.makeText(activity, "点击了注册按钮", Toast.LENGTH_SHORT).show();
-                        Log.i("Presenter","点击了注册按钮");
+                        activity.startActivity(new Intent(activity, RegistePageActivity.class));
+                        Log.i("Presenter", "点击了注册按钮");
                         break;
                 }
             }
         };
     }
 
-    private void loginEvent(){
-        loginResult=0;
+    private void loginEvent() {
+        loginResult = 0;
         BmobUser.loginByAccount(account, pwd, new LogInListener<User>() {
             @Override
             public void done(User user, BmobException e) {
-                if (e==null){
-                    loginResult+=1;
+                if (e == null) {
+                    loginResult += 1;
                     tryLogin();
-                    Log.i("ResultBM","登录成功"+loginResult);
-                }else{
+                    Log.i("ResultBM", "登录成功" + loginResult);
+                } else {
                     loginResult = 0;
                     tryLogin();
-                    Log.e(getClass().getName(),"BmobLoginError-"+e.getMessage());
+                    Log.e(getClass().getName(), "BmobLoginError-" + e.getMessage());
                 }
 
             }
         });
 
-        JMessageClient.login(account,pwd, new BasicCallback() {
+        JMessageClient.login(account, pwd, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
-                if (i==0){
-                    loginResult+=1;
+                if (i == 0) {
+                    loginResult += 1;
                     tryLogin();
-                    Log.i("ResultJM","登录成功"+loginResult);
-                }else{
+                    Log.i("ResultJM", "登录成功" + loginResult);
+                } else {
                     loginResult = 0;
                     tryLogin();
-                    Log.e(getClass().getName(),"JMessageLoginError-"+s);
+                    Log.e(getClass().getName(), "JMessageLoginError-" + s);
                 }
             }
         });
     }
 
     private void tryLogin() {
-        if (loginResult==2){
+        if (loginResult == 2) {
             //  Todo  登陆成功
             activity.startActivity(new Intent(activity, MainfacePage.class));
             activity.finish();
-        }else{
+        } else {
 
         }
     }
 
     @Override
     public void namesize(int a) {
-        this.nameSize=a;
+        this.nameSize = a;
     }
 
     @Override
     public void pwdsize(int b) {
-        this.pwdSize=b;
+        this.pwdSize = b;
     }
 
     @Override
     public void changeState() {
-        if (this.nameSize+this.pwdSize==2){
+        if (this.nameSize + this.pwdSize == 2) {
             activity.refreshLoginbtn(true);
-        }else {
+        } else {
             activity.refreshLoginbtn(false);
         }
     }

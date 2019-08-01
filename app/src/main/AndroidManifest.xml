@@ -40,7 +40,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login_registe.LoginPageActivity"></activity>
+        <activity android:name=".login_registe.RegistePageActivity"></activity>
+        <activity android:name=".login_registe.LoginPageActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />

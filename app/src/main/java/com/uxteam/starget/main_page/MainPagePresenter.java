@@ -7,7 +7,8 @@ public class MainPagePresenter {
         this.mainPage = mainPage;
     }
 
-    public void load(){
+    public MainPagePresenter load(){
 
+        return this;
     }
 }

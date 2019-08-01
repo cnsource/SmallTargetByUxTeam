@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+     <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            app:navigationIcon="@mipmap/back">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/headIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:src="@drawable/ic_login_head_icon"
+            />
+        <EditText
+
+            android:id="@+id/nick_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/headIcon"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_nick_name"
+            android:hint="昵称" />
+        <EditText
+            android:layout_below="@id/nick_name"
+            android:id="@+id/registe_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_tel"
+            android:hint="电话号码" />
+
+        <EditText
+            android:layout_toLeftOf="@id/registe_getYzm"
+            android:id="@+id/registe_yzm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registe_tel"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_yzm"
+            android:hint="验证码" />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:elevation="3dp"
+            android:id="@+id/registe_getYzm"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_below="@id/registe_tel"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+
+            android:text="获取验证码"
+            android:textSize="16sp" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/registe_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registe_getYzm"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_pwd"
+            android:hint="设置6—18位密码" />
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/_registe_secPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registe_pwd"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_pwd"
+            android:hint="再次确认密码" />
+        <Button
+            android:layout_centerInParent="true"
+            android:layout_below="@id/_registe_secPwd"
+            android:text="立即注册"
+            android:textSize="18sp"
+            android:background="@drawable/registe_btn"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/registe_btn"/>
+    </RelativeLayout>
+</LinearLayout>
