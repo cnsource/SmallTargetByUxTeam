@@ -2,16 +2,12 @@ package com.uxteam.starget.login_registe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
@@ -40,7 +36,7 @@ public class LoginPageActivity extends AppCompatActivity {
     }
 
     private void bindViewControl() {
-        cirHeadIcon = findViewById(R.id.headIcon);
+        cirHeadIcon = findViewById(R.id._registe_headIcon);
         account = findViewById(R.id.username);
         password = findViewById(R.id.password);
         loginbtn = findViewById(R.id.loginbtn);

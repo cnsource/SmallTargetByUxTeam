@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -28,7 +28,17 @@ android {
         }
     }
 }
+MobSDK {
+    appKey "2be9ed1cd1730"
+    appSecret "d3ce1d273baf1df79d62ba175be40b7c"
 
+    SMSSDK {
+        //默认使用GUI，若不使用GUI，通过以下开关关闭
+        gui false
+        //若使用GUI的自动填充验证码功能，需打开此设置
+        //autoSMS true
+    }
+}
 dependencies {
     /*--------------Bmob------------------------------*/
     implementation 'cn.bmob.android:bmob-sdk:3.7.3-rc1'
@@ -44,6 +54,10 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:2.0.0'  // 此处以JCore 2.0.0 版本为例。
     /*------------------------圆形图片-----------*/
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    /*------------------知乎开源图片选择框架-----------------*/
+    implementation 'com.zhihu.android:matisse:0.5.2-beta5'
+    /*-------------------UCrop图片裁剪框架-----------------*/
+    implementation 'com.github.yalantis:ucrop:2.2.3'
     /*----------Glide-------*/
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'

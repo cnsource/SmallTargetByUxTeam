@@ -12,10 +12,11 @@
         android:background="#fff">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            app:navigationIcon="@mipmap/back">
+            app:navigationIcon="@drawable/ic_back">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -26,19 +27,19 @@
         android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/headIcon"
+            android:id="@+id/_registe_headIcon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_width="88dp"
             android:layout_height="88dp"
-            android:src="@drawable/ic_login_head_icon"
+            android:src="@drawable/ic_addhead"
             />
         <EditText
 
-            android:id="@+id/nick_name"
+            android:id="@+id/_registe_nick_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/headIcon"
+            android:layout_below="@id/_registe_headIcon"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
@@ -46,8 +47,8 @@
             android:drawableLeft="@drawable/ic_nick_name"
             android:hint="昵称" />
         <EditText
-            android:layout_below="@id/nick_name"
-            android:id="@+id/registe_tel"
+            android:layout_below="@id/_registe_nick_name"
+            android:id="@+id/_registe__tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -58,11 +59,11 @@
             android:hint="电话号码" />
 
         <EditText
-            android:layout_toLeftOf="@id/registe_getYzm"
-            android:id="@+id/registe_yzm"
+            android:layout_toLeftOf="@id/_registe_getYzm"
+            android:id="@+id/_registe_yzm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registe_tel"
+            android:layout_below="@id/_registe__tel"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
@@ -73,10 +74,10 @@
         <Button
             android:layout_alignParentRight="true"
             android:elevation="3dp"
-            android:id="@+id/registe_getYzm"
+            android:id="@+id/_registe_getYzm"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
-            android:layout_below="@id/registe_tel"
+            android:layout_below="@id/_registe__tel"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
 
@@ -85,10 +86,10 @@
 
         <EditText
             android:inputType="textPassword"
-            android:id="@+id/registe_pwd"
+            android:id="@+id/_registe_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registe_getYzm"
+            android:layout_below="@id/_registe_getYzm"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
@@ -100,7 +101,7 @@
             android:id="@+id/_registe_secPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registe_pwd"
+            android:layout_below="@id/_registe_pwd"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
@@ -116,6 +117,6 @@
             android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:id="@+id/registe_btn"/>
+            android:id="@+id/_registe_btn"/>
     </RelativeLayout>
 </LinearLayout>
