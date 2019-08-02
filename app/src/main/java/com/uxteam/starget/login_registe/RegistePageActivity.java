@@ -35,7 +35,6 @@ public class RegistePageActivity extends AppCompatActivity implements TransferDa
     private EditText yzm;
     private EditText pwd;
     private EditText secpwd;
-    private EventHandler eventHandler;
     private RegistePagePresenter presenter;
     private Toolbar toolbar;
 
