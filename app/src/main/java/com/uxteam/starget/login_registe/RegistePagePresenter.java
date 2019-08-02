@@ -15,14 +15,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.upyun.library.common.ParallelUploader;
+import com.upyun.library.listener.UpCompleteListener;
+import com.upyun.library.listener.UpProgressListener;
+import com.upyun.library.utils.UpYunUtils;
 import com.uxteam.starget.R;
+import com.uxteam.starget.bmob_sys_pkg.User;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
+import cn.jpush.im.api.BasicCallback;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -31,6 +43,11 @@ public class RegistePagePresenter implements View.OnClickListener {
     private RegistePageActivity registePageActivity;
     private EventHandler eventHandler;
     private File file;
+    private String TAG = "上传进度";
+    private boolean CHOOSEICON = false;
+    private int BmobInfoRegisteResult = 0;
+    private int JMInfoRegisteResult = 0;
+    private List<String> errorInfo = new ArrayList<>();
 
     public RegistePagePresenter(RegistePageActivity registePageActivity) {
         this.registePageActivity = registePageActivity;
@@ -49,10 +66,12 @@ public class RegistePagePresenter implements View.OnClickListener {
                 openIconSwitch();
                 break;
             case R.id._registe_getYzm:
-                SMSSDK.getVerificationCode("86", registePageActivity.getTel());
+                if (!TextUtils.isEmpty(registePageActivity.getTel()))
+                    SMSSDK.getVerificationCode("86", registePageActivity.getTel());
+                else Toast.makeText(registePageActivity, "请输入手机号码", Toast.LENGTH_SHORT).show();
                 break;
             case R.id._registe_btn:
-                SMSSDK.submitVerificationCode("86", registePageActivity.getTel(), registePageActivity.getYzm());
+                RegisteVerification();
                 break;
             default:
                 registePageActivity.finish();
@@ -99,8 +118,7 @@ public class RegistePagePresenter implements View.OnClickListener {
                         } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                             if (result == SMSSDK.RESULT_COMPLETE) {
                                 // TODO 处理验证码验证通过的结果
-                                startRegiste();
-                                Toast.makeText(registePageActivity, "验证码验证通过", Toast.LENGTH_LONG).show();
+                                registeFuncation();
                             } else {
                                 // TODO 处理错误的结果
                                 Toast.makeText(registePageActivity, "验证码验证失败", Toast.LENGTH_LONG).show();
@@ -116,23 +134,96 @@ public class RegistePagePresenter implements View.OnClickListener {
         SMSSDK.registerEventHandler(eventHandler);
     }
 
-    private void startRegiste() {
+    private void RegisteVerification() {
+        if (!(TextUtils.isEmpty(registePageActivity.getTel()) || TextUtils.isEmpty(registePageActivity.getPwd())
+                || TextUtils.isEmpty(registePageActivity.getSecPwd()))) {
+            if (registePageActivity.getPwd().equals(registePageActivity.getSecPwd())) {
+                if (!TextUtils.isEmpty(registePageActivity.getYzm()))
+                    SMSSDK.submitVerificationCode("86", registePageActivity.getTel(), registePageActivity.getYzm());
+                else Toast.makeText(registePageActivity, "请输入验证码", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(registePageActivity, "两次密码不一致", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(registePageActivity, "请填写完整的注册信息", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void registeFuncation() {
+        errorInfo.clear();
+        BmobInfoRegisteResult = 0;
+        JMInfoRegisteResult = 0;
+        User user = new User();
+        user.setUsername(registePageActivity.getTel());
+        user.setNickName(registePageActivity.getNickName());
+        user.setPassword(registePageActivity.getPwd());
+        user.setCachePwd(registePageActivity.getPwd());
+        user.setMobilePhoneNumber(registePageActivity.getTel());
+        user.signUp(new SaveListener<User>() {
+            @Override
+            public void done(User user, BmobException e) {
+                if (e == null) {
+                    BmobInfoRegisteResult = 1;
+                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
+                } else {
+                    errorInfo.add(e.getMessage());
+                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
+                }
+            }
+        });
+        RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
+        optionalUserInfo.setNickname(registePageActivity.getNickName());
+
+        JMessageClient.register(registePageActivity.getTel(), registePageActivity.getPwd(), optionalUserInfo, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if (i == 0) {
+                    JMInfoRegisteResult = 1;
+                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
+                } else {
+                    errorInfo.add(s);
+                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
+
+                }
+            }
+        });
+        if (CHOOSEICON) {
+            upLoadHeadIcon();
+        }
         unRegisteEventHandler();
     }
 
-    public void switchIconResult(Uri uri) {
+    private void upLoadHeadIcon() {
+        ParallelUploader parallelUploader = new ParallelUploader("small-target", "qwe", UpYunUtils.md5("46ASahJopHUgjg9MWEWC0b9WTEt4kEoR"));
+        parallelUploader.setCheckMD5(true);
+        parallelUploader.setOnProgressListener(new UpProgressListener() {
+            @Override
+            public void onRequestProgress(long bytesWrite, long contentLength) {
+                Log.e(TAG, bytesWrite + ":" + contentLength);
+            }
+        });
+        parallelUploader.upload(file, "/head/" + registePageActivity.getTel() + ".jpg", null, new UpCompleteListener() {
+            @Override
+            public void onComplete(boolean isSuccess, String result) {
+                Log.e(TAG, "isSuccess:" + isSuccess + "  result:" + result);
+            }
+        });
+    }
+
+    public void chooseHeadIconResult(Uri uri) {
         file = new File(registePageActivity.getCacheDir() + "/uCrop.jpg");
-        if (file.exists()){
+        if (file.exists()) {
             file.delete();
         }
-        UCrop.Options options=new UCrop.Options();
+        UCrop.Options options = new UCrop.Options();
+        options.setCompressionQuality(100);
         options.setCircleDimmedLayer(true);
         options.setRootViewBackgroundColor(Color.WHITE);
         options.setToolbarTitle("裁剪头像");
         options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
         UCrop.of(uri, Uri.fromFile(file))
                 .withAspectRatio(16, 16)
-                .withMaxResultSize(128, 128)
+                .withMaxResultSize(400, 400)
                 .withOptions(options)
                 .start(registePageActivity);
     }
@@ -141,9 +232,11 @@ public class RegistePagePresenter implements View.OnClickListener {
         try {
             Bitmap bitmap = Bitmap.createBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
             registePageActivity.reFreshHeadIcon(bitmap);
-        }catch (Exception e){
-            Log.i("捕获异常2",e.getMessage());
-        };
+            CHOOSEICON = true;
+        } catch (Exception e) {
+            Log.i("捕获异常2", e.getMessage());
+        }
+
     }
 
     private String getPAth(Uri uri) {
@@ -168,4 +261,16 @@ public class RegistePagePresenter implements View.OnClickListener {
         SMSSDK.unregisterEventHandler(eventHandler);
     }
 
+    private void registeResult(int a, int b) {
+        if (errorInfo.size() == 0) {
+            if (a + b == 2)
+                Toast.makeText(registePageActivity, "注册成功", Toast.LENGTH_SHORT).show();
+        }else {
+            StringBuilder builder = new StringBuilder("注册失败————");
+            for (String str : errorInfo) {
+                builder.append(str);
+            }
+            Toast.makeText(registePageActivity, builder, Toast.LENGTH_SHORT).show();
+        }
+    }
 }

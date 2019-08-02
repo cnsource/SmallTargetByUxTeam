@@ -6,23 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
 import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
-import java.util.List;
-
-import cn.smssdk.EventHandler;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistePageActivity extends AppCompatActivity implements TransferData {
@@ -104,7 +97,7 @@ public class RegistePageActivity extends AppCompatActivity implements TransferDa
         switch (requestCode) {
             case RegistePagePresenter.REQUEST_CODE_CHOOSE:
                 try {
-                    presenter.switchIconResult(Matisse.obtainResult(data).get(0));
+                    presenter.chooseHeadIconResult(Matisse.obtainResult(data).get(0));
                 }catch (Exception e){
                     Log.i("捕获异常",e.getMessage());
                 }
