@@ -122,6 +122,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignStart="@+id/card_content"
                     android:layout_alignTop="@+id/card_content"
+                    tools:listitem="@layout/fragment_self_page_rec_item"
                     tools:itemCount="4">
 
                 </androidx.recyclerview.widget.RecyclerView>

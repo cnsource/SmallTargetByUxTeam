@@ -3,11 +3,10 @@
     android:id="@+id/targetitem_bg"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    app:cardCornerRadius="14dp"
+    android:layout_marginTop="4dp"
     app:cardBackgroundColor="#FF7C1E"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
+    android:layout_height="180dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout

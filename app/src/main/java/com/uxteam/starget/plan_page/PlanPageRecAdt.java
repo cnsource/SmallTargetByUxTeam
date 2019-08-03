@@ -16,6 +16,7 @@ import java.util.List;
 public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
     private Context context;
     private List<Target> targets;
+    private int ViewSign;
 
     public PlanPageRecAdt(Context context, List<Target> targets) {
         this.context = context;
@@ -32,9 +33,15 @@ public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
 
     @Override
     public void onBindViewHolder(@NonNull PlanPageRecVH holder, int position) {
+            if (ViewSign==0){
 
+            }else {
+
+            }
     }
-
+    public  void setViewSign(int ViewSign){
+        this.ViewSign=ViewSign;
+    }
     @Override
     public int getItemCount() {
         return targets.size();

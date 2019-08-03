@@ -2,6 +2,7 @@ package com.uxteam.starget.plan_page;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,72 +21,118 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.util.V;
 
 public class PlanPagePresenter {
     private PlanPage planPage;
-    private List<Target> targets=new ArrayList<>();
+    private List<Target> targets = new ArrayList<>();
     private PlanPageRecAdt adt;
-    private SwipeRefreshLayout view;
+    private int ViewSign = 0;
 
     public PlanPagePresenter(PlanPage planPage) {
         this.planPage = planPage;
     }
 
-    public PlanPagePresenter load(){
-        planPage.bindControlEvent(refreshListenerProvider(),adtProvider());
+    public PlanPagePresenter load() {
+        planPage.bindControlEvent(refreshListenerProvider(), adtProvider(), itemSelectedListenerProvider());
+        initViewData(ViewSign);
         return this;
     }
-    private PlanPageRecAdt adtProvider(){
 
-        adt = new PlanPageRecAdt(planPage.getContext(),targets);
+    private PlanPageRecAdt adtProvider() {
 
+        adt = new PlanPageRecAdt(planPage.getContext(), targets);
+        adt.setViewSign(0);
         return adt;
     }
-    private SwipeRefreshLayout.OnRefreshListener refreshListenerProvider(){
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListenerProvider() {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initViewData();
-                view.setRefreshing(false);
+                initViewData(ViewSign);
+                planPage.closeRefresh();
             }
         };
     }
 
-    private void initViewData(){
-        try {
-            QueryData();
-        } catch (ParseException e) {
-            Toast.makeText(planPage.getContext(), "数据获取错误", Toast.LENGTH_SHORT).show();
-            Log.i("DataGetError",e.getMessage());
-        }
-        adtProvider().notifyDataSetChanged();
+    private AdapterView.OnItemSelectedListener itemSelectedListenerProvider() {
+        return new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+                    ViewSign = 0;
+                } else {
+                    ViewSign = 1;
+                }
+                adt.setViewSign(ViewSign);
+                initViewData(ViewSign);
+                planPage.refreshData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
     }
 
-    private void QueryData() throws ParseException {
-        BmobQuery query1=new BmobQuery();
-                query1.addWhereEqualTo("publisher",BmobUser.getCurrentUser(User.class));
-                query1.order("-updatedAt");
-                query1.include("publisher,supervisor");
-        BmobQuery<Target> query2=new BmobQuery<>();
+    private void initViewData(int ViewSign) {
+        try {
+            QueryData(ViewSign);
+        } catch (ParseException e) {
+            Toast.makeText(planPage.getContext(), "数据获取错误", Toast.LENGTH_SHORT).show();
+            Log.i("DataGetError", e.getMessage());
+        }
+    }
+
+    private void QueryData(int ViewSign) throws ParseException {
+    /*  Target target=new Target();
+        target.setPublisher(BmobUser.getCurrentUser(User.class));
+        target.setRemark("456");
+        target.setTargetContent("今天吃4564饭没");
+        target.setTargetState(true);
+        target.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e==null){
+                    Log.i("添加成功",s);
+                }else {
+                    Log.i("添加失败",e.getMessage());
+                }
+            }
+        });*/
+        BmobQuery<Target> query = new BmobQuery<>();
+        if (ViewSign == 0)
+            query.addWhereEqualTo("publisher", BmobUser.getCurrentUser(User.class));
+        else {
+            query.addWhereEqualTo("supervisor", BmobUser.getCurrentUser(User.class));
+        }
+        query.include("publisher,supervisor");
+        BmobQuery<Target> query2 = new BmobQuery<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String createdAt = format.format(new Date())+" 00:00:01";
+        String createdAt = format.format(new Date()) + " 00:00:01";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date createdAtDate = sdf.parse(createdAt);
-        BmobDate date=new BmobDate(createdAtDate);
-                query2.addWhereGreaterThanOrEqualTo("createdAt",date);
-        List<BmobQuery<Target>> querySet=new ArrayList<>();
-        querySet.add(query1);
+        BmobDate date = new BmobDate(createdAtDate);
+        query2.addWhereGreaterThanOrEqualTo("createdAt", date);
+        List<BmobQuery<Target>> querySet = new ArrayList<>();
+        querySet.add(query);
         querySet.add(query2);
-        BmobQuery<Target> querys=new BmobQuery<>();
+        BmobQuery<Target> querys = new BmobQuery<>();
         querys.and(querySet);
         querys.findObjects(new FindListener<Target>() {
             @Override
             public void done(List<Target> list, BmobException e) {
-                targets.addAll(list);
+                if (e == null) {
+                    Log.i("List表", "" + list.size());
+                    targets.clear();
+                    targets.addAll(list);
+                    planPage.refreshData();
+                } else {
+                    Log.e("查询失败", e.getMessage());
+                }
             }
         });
-    }
-    public void closeRefresh(SwipeRefreshLayout view){
-        this.view = view;
     }
 }

@@ -1,11 +1,13 @@
 package com.uxteam.starget.self_page;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 
 import com.uxteam.starget.R;
+import com.uxteam.starget.bmob_sys_pkg.User;
 import com.uxteam.starget.login_registe.LoginPageActivity;
 
 import java.util.ArrayList;
@@ -42,12 +44,14 @@ public class SelfPagePresenter {
         List<SelfPageRecItem> items=new ArrayList<>();
         items.add(new SelfPageRecItem(R.mipmap.list,"监督列表"));
         items.add(new SelfPageRecItem(R.mipmap.frends,"朋友列表"));
+        items.add(new SelfPageRecItem(R.drawable.ic_self_analyze,"个人分析"));
         SelfPageRecAdt selfPageRecAdt = new SelfPageRecAdt(selfPage.getContext(),items);
         return selfPageRecAdt;
     }
     private String getUserName(){
-        
-        return "AAA";
+        if (!TextUtils.isEmpty(BmobUser.getCurrentUser(User.class).getNickName())){
+            return "设置昵称";
+        }
+        return BmobUser.getCurrentUser(User.class).getNickName();
     }
-
 }

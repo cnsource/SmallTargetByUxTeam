@@ -13,7 +13,7 @@ import com.uxteam.starget.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainPage extends Fragment {
+public class TargetDymicPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,7 +21,7 @@ public class MainPage extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        new MainPagePresenter(this).load();
+        new TargetDymicPagePresenter(this).load();
         return view;
     }
 

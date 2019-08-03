@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.uxteam.starget.R;
-import com.uxteam.starget.main_page.MainPage;
+import com.uxteam.starget.main_page.TargetDymicPage;
 import com.uxteam.starget.plan_page.PlanPage;
 import com.uxteam.starget.self_page.SelfPage;
 
@@ -24,7 +24,7 @@ public class MainfacePage extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new PlanPage()).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new MainPage()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new TargetDymicPage()).commit();
                     return true;
                 case R.id.navigation_notifications:
                     getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new SelfPage()).commit();

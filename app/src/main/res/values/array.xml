@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spi_list">
+        <item >我的目标</item>
+        <item >监督目标</item>
+    </string-array>
+</resources>
