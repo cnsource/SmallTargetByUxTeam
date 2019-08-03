@@ -137,12 +137,16 @@ public class RegistePagePresenter implements View.OnClickListener {
     private void RegisteVerification() {
         if (!(TextUtils.isEmpty(registePageActivity.getTel()) || TextUtils.isEmpty(registePageActivity.getPwd())
                 || TextUtils.isEmpty(registePageActivity.getSecPwd()))) {
-            if (registePageActivity.getPwd().equals(registePageActivity.getSecPwd())) {
-                if (!TextUtils.isEmpty(registePageActivity.getYzm()))
-                    SMSSDK.submitVerificationCode("86", registePageActivity.getTel(), registePageActivity.getYzm());
-                else Toast.makeText(registePageActivity, "请输入验证码", Toast.LENGTH_SHORT).show();
+            if (registePageActivity.getPwd().length() >= 6 && registePageActivity.getPwd().length() <= 18) {
+                if (registePageActivity.getPwd().equals(registePageActivity.getSecPwd())) {
+                    if (!TextUtils.isEmpty(registePageActivity.getYzm()))
+                        SMSSDK.submitVerificationCode("86", registePageActivity.getTel(), registePageActivity.getYzm());
+                    else Toast.makeText(registePageActivity, "请输入验证码", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(registePageActivity, "两次密码不一致", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(registePageActivity, "两次密码不一致", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registePageActivity, "密码长度不符合要求", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(registePageActivity, "请填写完整的注册信息", Toast.LENGTH_SHORT).show();
@@ -265,7 +269,7 @@ public class RegistePagePresenter implements View.OnClickListener {
         if (errorInfo.size() == 0) {
             if (a + b == 2)
                 Toast.makeText(registePageActivity, "注册成功", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             StringBuilder builder = new StringBuilder("注册失败————");
             for (String str : errorInfo) {
                 builder.append(str);

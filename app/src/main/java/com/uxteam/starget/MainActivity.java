@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         startActivity(new Intent(MainActivity.this, LoginPageActivity.class));
+        finish();
     }
 
     private void initOpenApi() {
