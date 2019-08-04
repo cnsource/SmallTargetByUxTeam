@@ -29,7 +29,7 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, +1); //今天的时间加一天
         date = calendar.getTime();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy:MM:dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
         return df.format(date);
     }
 }

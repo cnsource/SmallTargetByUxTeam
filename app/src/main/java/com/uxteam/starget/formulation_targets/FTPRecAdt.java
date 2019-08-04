@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.Target;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class FTPRecAdt extends RecyclerView.Adapter<FTPRecVH> {
 
     @Override
     public void onBindViewHolder(@NonNull FTPRecVH holder, int position) {
-
+            holder.endTime.setText(DateUtils.getNextDay());
     }
 
     @Override

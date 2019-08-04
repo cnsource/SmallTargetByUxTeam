@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
 
 public class FormulationTargetsPage extends AppCompatActivity {
@@ -25,6 +27,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
     private LinearLayout inputLayout;
     private FabBehaviorAnimator fabBehaviorAnimator;
     private Spinner spinner;
+    private TextView endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
         reportBtn = findViewById(R.id.ftp_report_btn);
         edit = findViewById(R.id.ftp_targetContent);
         spinner = findViewById(R.id.supervisor_list);
+        endTime = findViewById(R.id.endtime);
     }
 
     public void bindViewEvent(View.OnClickListener clickListener, FTPRecAdt ftpRecAdt, SpinnerAdapter spinnerAdapter, FabBehaviorAnimator behaviorAnimator) {
@@ -61,6 +65,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
     }
     public void displayEdit(int visiable) {
         edit.setText("");
+        endTime.setText(DateUtils.getNextDay());
         inputLayout.setVisibility(visiable);
     }
 

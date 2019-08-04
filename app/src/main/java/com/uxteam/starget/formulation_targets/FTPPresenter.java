@@ -33,6 +33,7 @@ public class FTPPresenter implements FabBehaviorAnimator {
 
     public FTPPresenter(FormulationTargetsPage activity) {
         this.activity = activity;
+        initSupervisorList();
     }
 
     public FTPPresenter load() {
@@ -104,7 +105,6 @@ public class FTPPresenter implements FabBehaviorAnimator {
                         @Override
                         public void done(List<User> list, BmobException e) {
                             supervisorlist.addAll(list);
-                            activity.refreshRecAdt();
                         }
                     };
                     List<BmobQuery<User>> queries = new ArrayList<BmobQuery<User>>();
