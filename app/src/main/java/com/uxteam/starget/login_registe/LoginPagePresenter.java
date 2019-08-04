@@ -12,6 +12,9 @@ import com.uxteam.starget.R;
 import com.uxteam.starget.main_face.MainfacePage;
 import com.uxteam.starget.bmob_sys_pkg.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
@@ -25,7 +28,9 @@ public class LoginPagePresenter implements InputTextChecked {
     private LoginPageActivity activity;
     private String account;
     private String pwd;
-
+    private int BMLoginResult=0;
+    private int JMLoginResult=0;
+    List<String> errorInfos=new ArrayList<>();
     public LoginPagePresenter(LoginPageActivity activity) {
         this.activity = activity;
     }
@@ -115,15 +120,13 @@ public class LoginPagePresenter implements InputTextChecked {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    loginResult += 1;
-                    tryLogin();
+                    BMLoginResult = 1;
                     Log.i("ResultBM", "登录成功" + loginResult);
                 } else {
-                    loginResult = 0;
-                    tryLogin();
+                    errorInfos.add(e.getMessage());
                     Log.e(getClass().getName(), "BmobLoginError-" + e.getMessage());
                 }
-
+                tryLogin(BMLoginResult,JMLoginResult);
             }
         });
 
@@ -131,25 +134,28 @@ public class LoginPagePresenter implements InputTextChecked {
             @Override
             public void gotResult(int i, String s) {
                 if (i == 0) {
-                    loginResult += 1;
-                    tryLogin();
+                    JMLoginResult=1;
                     Log.i("ResultJM", "登录成功" + loginResult);
                 } else {
-                    loginResult = 0;
-                    tryLogin();
+                    errorInfos.add(s);
                     Log.e(getClass().getName(), "JMessageLoginError-" + s);
                 }
+                tryLogin(BMLoginResult,JMLoginResult);
             }
         });
     }
 
-    private void tryLogin() {
-        if (loginResult == 2) {
+    private void tryLogin(int a,int b) {
+        if (a+b == 2) {
             //  Todo  登陆成功
             activity.startActivity(new Intent(activity, MainfacePage.class));
             activity.finish();
         } else {
-
+            StringBuilder builder = new StringBuilder("登录失败————");
+            for (String str : errorInfos) {
+                builder.append(str);
+            }
+            Toast.makeText(activity, builder, Toast.LENGTH_SHORT).show();
         }
     }
 

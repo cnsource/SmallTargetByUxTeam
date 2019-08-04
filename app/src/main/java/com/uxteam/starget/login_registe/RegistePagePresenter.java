@@ -168,11 +168,10 @@ public class RegistePagePresenter implements View.OnClickListener {
             public void done(User user, BmobException e) {
                 if (e == null) {
                     BmobInfoRegisteResult = 1;
-                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
                 } else {
                     errorInfo.add(e.getMessage());
-                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
                 }
+                registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
             }
         });
         RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
@@ -183,12 +182,11 @@ public class RegistePagePresenter implements View.OnClickListener {
             public void gotResult(int i, String s) {
                 if (i == 0) {
                     JMInfoRegisteResult = 1;
-                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
                 } else {
                     errorInfo.add(s);
-                    registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
-
                 }
+                registeResult(BmobInfoRegisteResult, JMInfoRegisteResult);
+
             }
         });
         if (CHOOSEICON) {

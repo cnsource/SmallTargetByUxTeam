@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:id="@+id/input_view"
+    android:padding="12dp"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+       <Spinner
+           android:id="@+id/supervisor_list"
+           android:layout_width="match_parent"
+           android:layout_height="40dp">
+       </Spinner>
+        <EditText
+            android:hint="限定目标内容为100字"
+            android:gravity="top|left"
+            android:maxLength="150"
+            android:id="@+id/ftp_targetContent"
+            android:layout_below="@id/supervisor_list"
+            android:layout_above="@id/endtime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/endtime"
+            android:layout_alignParentBottom="true"
+            android:padding="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="00:00:00:00"
+            android:gravity="center"
+            android:textColor="#aaa"
+            android:textSize="18sp"
+            />
+    </RelativeLayout>
+</LinearLayout>

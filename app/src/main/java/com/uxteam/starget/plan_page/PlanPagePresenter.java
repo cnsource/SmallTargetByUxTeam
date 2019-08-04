@@ -78,15 +78,10 @@ public class PlanPagePresenter {
     }
 
     private void initViewData(int ViewSign) {
-        try {
             QueryData(ViewSign);
-        } catch (ParseException e) {
-            Toast.makeText(planPage.getContext(), "数据获取错误", Toast.LENGTH_SHORT).show();
-            Log.i("DataGetError", e.getMessage());
-        }
     }
 
-    private void QueryData(int ViewSign) throws ParseException {
+    private void QueryData(int ViewSign){
     /*  Target target=new Target();
         target.setPublisher(BmobUser.getCurrentUser(User.class));
         target.setRemark("456");
@@ -106,14 +101,21 @@ public class PlanPagePresenter {
         if (ViewSign == 0)
             query.addWhereEqualTo("publisher", BmobUser.getCurrentUser(User.class));
         else {
-            query.addWhereEqualTo("supervisor", BmobUser.getCurrentUser(User.class));
+            query.addWhereEqualTo("su pervisor", BmobUser.getCurrentUser(User.class));
         }
         query.include("publisher,supervisor");
         BmobQuery<Target> query2 = new BmobQuery<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String createdAt = format.format(new Date()) + " 00:00:01";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date createdAtDate = sdf.parse(createdAt);
+        Date createdAtDate = null;
+        try {
+            createdAtDate = sdf.parse(createdAt);
+        } catch (ParseException e) {
+            Toast.makeText(planPage.getContext(), "数据获取错误", Toast.LENGTH_SHORT).show();
+            Log.i("DataGetError", e.getMessage());
+            e.printStackTrace();
+        }
         BmobDate date = new BmobDate(createdAtDate);
         query2.addWhereGreaterThanOrEqualTo("createdAt", date);
         List<BmobQuery<Target>> querySet = new ArrayList<>();

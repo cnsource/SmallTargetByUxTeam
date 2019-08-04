@@ -36,7 +36,7 @@
             android:src="@drawable/ic_addhead"
             />
         <EditText
-
+            android:maxLength="10"
             android:id="@+id/_registe_nick_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +48,7 @@
             android:drawableLeft="@drawable/ic_nick_name"
             android:hint="昵称" />
         <EditText
+            android:maxLength="11"
             android:layout_below="@id/_registe_nick_name"
             android:id="@+id/_registe__tel"
             android:layout_width="match_parent"
@@ -62,6 +63,7 @@
         <EditText
             android:layout_toLeftOf="@id/_registe_getYzm"
             android:id="@+id/_registe_yzm"
+            android:maxLength="4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/_registe__tel"
@@ -88,6 +90,7 @@
         <EditText
             android:inputType="textPassword"
             android:id="@+id/_registe_pwd"
+            android:maxLength="18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/_registe_getYzm"
@@ -98,6 +101,7 @@
             android:drawableLeft="@drawable/ic_pwd"
             android:hint="设置6—18位密码" />
         <EditText
+            android:maxLength="18"
             android:inputType="textPassword"
             android:id="@+id/_registe_secPwd"
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.Target;
 
 import java.util.List;
@@ -33,11 +34,14 @@ public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
 
     @Override
     public void onBindViewHolder(@NonNull PlanPageRecVH holder, int position) {
+            holder.startTime.setText(targets.get(position).getCreatedAt());
             if (ViewSign==0){
-
+                 holder.supervisor.append(targets.get(position).getSupervisor().getNickName());
             }else {
-
+                 holder.supervisor.setVisibility(View.GONE);
             }
+            holder.targetContent.setText(targets.get(position).getTargetContent());
+            holder.endTime.setText(DateUtils.getNextDay());
     }
     public  void setViewSign(int ViewSign){
         this.ViewSign=ViewSign;
