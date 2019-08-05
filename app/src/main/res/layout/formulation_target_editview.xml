@@ -4,6 +4,7 @@
     android:layout_height="200dp"
     android:id="@+id/input_view"
     android:padding="12dp"
+    android:background="#fefefe"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,9 +15,11 @@
            android:layout_height="40dp">
        </Spinner>
         <EditText
+            android:textColorHint="#ccc"
             android:hint="限定目标内容为100字"
             android:gravity="top|left"
             android:maxLength="150"
+            android:textColor="#000"
             android:id="@+id/ftp_targetContent"
             android:layout_below="@id/supervisor_list"
             android:layout_above="@id/endtime"
@@ -30,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="00:00:00:00"
             android:gravity="center"
-            android:textColor="#aaa"
+            android:textColor="#555"
             android:textSize="18sp"
             />
     </RelativeLayout>

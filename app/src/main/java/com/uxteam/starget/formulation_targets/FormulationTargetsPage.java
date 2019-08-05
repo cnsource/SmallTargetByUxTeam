@@ -1,9 +1,11 @@
 package com.uxteam.starget.formulation_targets;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +54,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
         addFab.setOnClickListener(clickListener);
         cencleFab.setOnClickListener(clickListener);
         reportBtn.setOnClickListener(clickListener);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(ftpRecAdt);
         spinner.setAdapter(spinnerAdapter);
         setFabBehaviorAnimator(behaviorAnimator);
@@ -62,6 +65,9 @@ public class FormulationTargetsPage extends AppCompatActivity {
     }
     public User getSupervisorSelected(){
         return (User) spinner.getSelectedItem();
+    }
+    public int getgetSupervisorSelectedId(){
+        return (int) spinner.getSelectedItemId();
     }
     public void displayEdit(int visiable) {
         edit.setText("");
@@ -80,6 +86,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
             fabBehaviorAnimator.fabreset(addFab, cencleFab);
     }
     public void refreshRecAdt(){
+        Log.i("调用了",""+ recyclerView.getAdapter().getItemCount());
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

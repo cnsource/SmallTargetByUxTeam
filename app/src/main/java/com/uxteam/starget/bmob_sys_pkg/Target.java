@@ -11,6 +11,7 @@ public class Target extends BmobObject {
     private boolean targetState;
     private String remark;
 
+    private int select;
 
     public String getStartTime() {
         return startTime;
@@ -66,6 +67,14 @@ public class Target extends BmobObject {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public int getSelect() {
+        return select;
+    }
+
+    public void setSelect(int select) {
+        this.select = select;
     }
 
 }

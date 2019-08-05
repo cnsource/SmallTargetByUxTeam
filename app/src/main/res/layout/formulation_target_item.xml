@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="164dp"
+    android:background="#fff"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+    <Spinner
+        android:id="@+id/target_supervisor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+    </Spinner>
+    <TextView
+        android:padding="4dp"
+        android:textColor="#000"
+        android:ellipsize="end"
+        android:id="@+id/target_content"
+        android:layout_above="@id/endtime"
+        android:layout_width="match_parent"
+        android:layout_height="88dp" />
+    <TextView
+        android:id="@+id/endtime"
+        android:layout_alignParentBottom="true"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="结束时间："
+        android:gravity="center"
+        android:textColor="#aaa"
+        android:textSize="16sp"
+        />
+</LinearLayout>

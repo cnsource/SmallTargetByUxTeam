@@ -10,7 +10,7 @@ import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
 
-public class SuperListAdt extends BaseAdapter {
+public class SuperListAdt extends BaseAdapter{
     private Context context;
     private List<User> users;
 
@@ -45,4 +45,5 @@ public class SuperListAdt extends BaseAdapter {
             v.setText(users.get(i).getUsername());
         return v;
     }
+
 }

@@ -3,6 +3,7 @@ package com.uxteam.starget.formulation_targets;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -21,6 +22,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -57,21 +59,43 @@ public class FTPPresenter implements FabBehaviorAnimator {
 
                         break;
                     case R.id.ftp_report_btn:
-
+                        saveTargets();
                         break;
                 }
             }
         };
     }
 
-    private void addTargets(boolean fabState) {
-        if (!fabState) {
-            Target target = new Target();
-            target.setPublisher(BmobUser.getCurrentUser(User.class));
-            target.setTargetContent(activity.getTargetContent());
-            target.setSupervisor(activity.getSupervisorSelected());
-            //累了，歇会。。。。。。。。。
+    private void saveTargets() {
+        final List<String> err=new ArrayList<>();
+        for (Target target:targets){
+            target.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e!=null){
+                        err.add(e.getMessage());
+                    }
+                }
+            });
         }
+        Toast.makeText(activity, "成功发布"+(targets.size()-err.size())+"个,失败"+err.size()+"个", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addTargets(boolean fabState) {
+        Log.i("FabState", fabState + "");
+        if (!TextUtils.isEmpty(activity.getTargetContent()))
+            if (!fabState) {
+                Target target = new Target();
+                target.setPublisher(BmobUser.getCurrentUser(User.class));
+                target.setTargetContent(activity.getTargetContent());
+                target.setSupervisor(activity.getSupervisorSelected());
+                target.setSelect(activity.getgetSupervisorSelectedId());
+                target.setTargetState(false);
+                targets.add(target);
+                activity.refreshRecAdt();
+                Log.i("TargetSize", targets.size() + "");
+            }
+
     }
 
     private FTPRecAdt adtProvider() {
@@ -99,6 +123,8 @@ public class FTPPresenter implements FabBehaviorAnimator {
         ContactManager.getFriendList(new GetUserInfoListCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage, List<UserInfo> userInfoList) {
+                Toast.makeText(activity, "好友列表" + userInfoList.size(), Toast.LENGTH_SHORT).show();
+
                 if (0 == responseCode) {
                     //获取好友列表成功
                     FindListener<User> findListener = new FindListener<User>() {

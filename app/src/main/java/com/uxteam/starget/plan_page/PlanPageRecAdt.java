@@ -27,25 +27,28 @@ public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
     @NonNull
     @Override
     public PlanPageRecVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.plan_page_targetitem,parent,false);
-        PlanPageRecVH pageRecVH=new PlanPageRecVH(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.plan_page_targetitem, parent, false);
+        PlanPageRecVH pageRecVH = new PlanPageRecVH(view);
         return pageRecVH;
     }
 
     @Override
     public void onBindViewHolder(@NonNull PlanPageRecVH holder, int position) {
-            holder.startTime.setText(targets.get(position).getCreatedAt());
-            if (ViewSign==0){
-                 holder.supervisor.append(targets.get(position).getSupervisor().getNickName());
-            }else {
-                 holder.supervisor.setVisibility(View.GONE);
-            }
-            holder.targetContent.setText(targets.get(position).getTargetContent());
-            holder.endTime.setText(DateUtils.getNextDay());
+        holder.startTime.setText(targets.get(position).getCreatedAt());
+        if (ViewSign == 0) {
+            if (targets.get(position).getSupervisor() != null)
+                holder.supervisor.append(targets.get(position).getSupervisor().getNickName());
+        } else {
+            holder.supervisor.setVisibility(View.GONE);
+        }
+        holder.targetContent.setText(targets.get(position).getTargetContent());
+        holder.endTime.setText(DateUtils.getNextDay());
     }
-    public  void setViewSign(int ViewSign){
-        this.ViewSign=ViewSign;
+
+    public void setViewSign(int ViewSign) {
+        this.ViewSign = ViewSign;
     }
+
     @Override
     public int getItemCount() {
         return targets.size();

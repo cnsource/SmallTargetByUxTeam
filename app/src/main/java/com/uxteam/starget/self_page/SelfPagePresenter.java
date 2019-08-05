@@ -49,7 +49,7 @@ public class SelfPagePresenter {
         return selfPageRecAdt;
     }
     private String getUserName(){
-        if (!TextUtils.isEmpty(BmobUser.getCurrentUser(User.class).getNickName())){
+        if (TextUtils.isEmpty(BmobUser.getCurrentUser(User.class).getNickName())){
             return "设置昵称";
         }
         return BmobUser.getCurrentUser(User.class).getNickName();

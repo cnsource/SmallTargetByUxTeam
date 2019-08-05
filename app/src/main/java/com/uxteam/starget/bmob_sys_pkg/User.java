@@ -13,6 +13,25 @@ public class User extends BmobUser {
     private int targetNumbers;
     private int targetTNumber;
     private int targetFNumber;
+    private int todayTargets;
+    private int todaySupervision;
+
+    public int getTodayTargets() {
+        return todayTargets;
+    }
+
+    public void setTodayTargets(int todayTargets) {
+        this.todayTargets = todayTargets;
+    }
+
+    public int getTodaySupervision() {
+        return todaySupervision;
+    }
+
+    public void setTodaySupervision(int todaySupervision) {
+        this.todaySupervision = todaySupervision;
+    }
+
     public String getNickName() {
         return nickName;
     }

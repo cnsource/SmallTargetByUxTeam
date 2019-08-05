@@ -82,26 +82,11 @@ public class PlanPagePresenter {
     }
 
     private void QueryData(int ViewSign){
-    /*  Target target=new Target();
-        target.setPublisher(BmobUser.getCurrentUser(User.class));
-        target.setRemark("456");
-        target.setTargetContent("今天吃4564饭没");
-        target.setTargetState(true);
-        target.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e==null){
-                    Log.i("添加成功",s);
-                }else {
-                    Log.i("添加失败",e.getMessage());
-                }
-            }
-        });*/
         BmobQuery<Target> query = new BmobQuery<>();
         if (ViewSign == 0)
             query.addWhereEqualTo("publisher", BmobUser.getCurrentUser(User.class));
         else {
-            query.addWhereEqualTo("su pervisor", BmobUser.getCurrentUser(User.class));
+            query.addWhereEqualTo("supervisor", BmobUser.getCurrentUser(User.class));
         }
         query.include("publisher,supervisor");
         BmobQuery<Target> query2 = new BmobQuery<>();
