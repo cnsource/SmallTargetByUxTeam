@@ -1,8 +1,14 @@
 package com.uxteam.starget.bmob_sys_pkg;
 
 import cn.bmob.v3.BmobUser;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
-public class User extends BmobUser {
+@Entity
+public class User extends BmobUser{
+    @Id
+    private long id;
+
     private String cachePwd;
     private String nickName;
     private String signature;
@@ -15,7 +21,33 @@ public class User extends BmobUser {
     private int targetFNumber;
     private int todayTargets;
     private int todaySupervision;
+    private String avatarNetPath;
 
+    public String getAvatarNetPath() {
+        return avatarNetPath;
+    }
+
+    public void setAvatarNetPath(String avatarNetPath) {
+        this.avatarNetPath = avatarNetPath;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getAvatarUri() {
+        return avatarUri;
+    }
+
+    public void setAvatarUri(String avatarUri) {
+        this.avatarUri = avatarUri;
+    }
+
+    private String avatarUri;
     public int getTodayTargets() {
         return todayTargets;
     }

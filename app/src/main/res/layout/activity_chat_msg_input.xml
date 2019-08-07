@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:layout_height="56dp">
+<EditText
+    android:id="@+id/activity_chat_input"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/activity_chat_send_btn"
+        android:text="发送"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -64,6 +64,13 @@ dependencies {
     /*-------------------------upyun---------------*/
     implementation 'com.upyun:upyun-android-sdk:2.1.0'
     implementation("com.squareup.okhttp3:okhttp:4.0.1")
+    /*-------------------ChatUI---------------------*/
+    implementation 'cn.jiguang.imui:messagelist:0.8.0'
+    /*---------------EventBus---------------------------*/
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    /*-----------------ObjectBox-----------*/
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$objectboxVersion"
+    releaseImplementation "io.objectbox:objectbox-android:$objectboxVersion"
     /*-------------------------------------------------------------*/
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -75,3 +82,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
 }
+apply plugin: 'io.objectbox'

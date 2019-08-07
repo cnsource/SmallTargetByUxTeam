@@ -207,6 +207,9 @@ public class RegistePagePresenter implements View.OnClickListener {
         parallelUploader.upload(file, "/head/" + registePageActivity.getTel() + ".jpg", null, new UpCompleteListener() {
             @Override
             public void onComplete(boolean isSuccess, String result) {
+                if (isSuccess){
+
+                }
                 Log.e(TAG, "isSuccess:" + isSuccess + "  result:" + result);
             }
         });
