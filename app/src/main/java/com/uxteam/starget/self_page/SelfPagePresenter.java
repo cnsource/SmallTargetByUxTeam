@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.uxteam.starget.R;
 import com.uxteam.starget.bmob_sys_pkg.User;
+import com.uxteam.starget.im_sys.MyFrends;
 import com.uxteam.starget.login_registe.LoginPageActivity;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class SelfPagePresenter {
         items.add(new SelfPageRecItem(R.mipmap.frends,"朋友列表"));
         items.add(new SelfPageRecItem(R.drawable.ic_self_analyze,"个人分析"));
         SelfPageRecAdt selfPageRecAdt = new SelfPageRecAdt(selfPage.getContext(),items);
+        selfPageRecAdt.setItemClickListener(itemClickListenerProvider());
         return selfPageRecAdt;
     }
     private String getUserName(){
@@ -53,5 +55,23 @@ public class SelfPagePresenter {
             return "设置昵称";
         }
         return BmobUser.getCurrentUser(User.class).getNickName();
+    }
+    private OnItemClickListener itemClickListenerProvider(){
+        return new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                switch (position){
+                    case 0:
+
+                        break;
+                    case 1:
+                           selfPage.startActivity(new Intent(selfPage.getContext(), MyFrends.class));
+                        break;
+                    case 2:
+
+                        break;
+                }
+            }
+        };
     }
 }

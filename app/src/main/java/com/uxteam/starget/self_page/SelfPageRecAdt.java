@@ -14,10 +14,11 @@ import com.uxteam.starget.R;
 import java.util.List;
 
 public class SelfPageRecAdt extends RecyclerView.Adapter<SelfPageRecVH> {
+    private OnItemClickListener itemClickListener;
 
     private Context context;
-    private List<SelfPageRecItem> itemInfos;
 
+    private List<SelfPageRecItem> itemInfos;
 
     public SelfPageRecAdt(Context context, List<SelfPageRecItem> infos) {
         this.context = context;
@@ -33,16 +34,13 @@ public class SelfPageRecAdt extends RecyclerView.Adapter<SelfPageRecVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SelfPageRecVH uv, int i) {
+    public void onBindViewHolder(@NonNull SelfPageRecVH uv,final int i) {
         uv.iv.setImageResource(itemInfos.get(i).getId());
         uv.infotext.setText(itemInfos.get(i).getInfotext());
         uv.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    //Todo  点击后跳转到好友列表界面
-
-
+                itemClickListener.onItemClick(i);
             }
         });
     }
@@ -50,6 +48,10 @@ public class SelfPageRecAdt extends RecyclerView.Adapter<SelfPageRecVH> {
     @Override
     public int getItemCount() {
         return itemInfos.size();
+    }
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
 }

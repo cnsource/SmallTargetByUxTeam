@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".im_sys.QueryIMUser">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/queryappbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#3993DD">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_marginLeft="8dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_back_"
+                android:layout_alignParentLeft="true"
+                android:layout_width="34dp"
+                android:layout_height="34dp" />
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="添加"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+<EditText
+    android:layout_below="@id/queryappbar"
+    android:id="@+id/query_name"
+    android:layout_alignParentLeft="true"
+    android:layout_width="wrap_content"
+    android:layout_toLeftOf="@id/querybtn"
+    android:layout_height="54dp" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/queryappbar"
+        android:id="@+id/querybtn"
+        android:text="查找"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_height="54dp" />
+    <RelativeLayout
+        android:id="@+id/userInfolayout"
+        android:layout_below="@id/query_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/userInfoCard"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="256dp">
+
+    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_below="@id/userInfoCard"
+        android:id="@+id/addBtn"
+        android:text="添加为好友"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="#1296db"/>
+    </RelativeLayout>
+</RelativeLayout>

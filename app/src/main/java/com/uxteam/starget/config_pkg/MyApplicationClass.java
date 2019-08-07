@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.uxteam.starget.MyObjectBox;
 
+import cn.bmob.v3.Bmob;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.event.OfflineMessageEvent;

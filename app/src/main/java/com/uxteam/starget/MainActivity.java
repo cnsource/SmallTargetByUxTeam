@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         initOpenApi();
         if (BmobUser.isLogin()) {
             User user = BmobUser.getCurrentUser(User.class);
-            JMessageClient.login(user.getUsername(),user.getCachePwd(), new BasicCallback() {
+            JMessageClient.login(user.getUsername(), user.getCachePwd(), new BasicCallback() {
                 @Override
                 public void gotResult(int i, String s) {
                     if (i == 0) {
@@ -35,12 +35,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, MainfacePage.class));
                     } else {
                         Log.e(getClass().getName(), "账户登录过期，请重新登录" + s);
+                        startActivity(new Intent(MainActivity.this, LoginPageActivity.class));
+                        finish();
                     }
                 }
             });
+        } else {
+            startActivity(new Intent(MainActivity.this, LoginPageActivity.class));
+            finish();
         }
-        startActivity(new Intent(MainActivity.this, LoginPageActivity.class));
-        finish();
     }
 
     private void initOpenApi() {

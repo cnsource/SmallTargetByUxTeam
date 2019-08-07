@@ -41,7 +41,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".self_page.MyFrends"></activity>
+        <activity android:name=".im_sys.NewFrend"></activity>
+        <activity android:name=".im_sys.QueryIMUser" />
+        <activity android:name=".im_sys.MyFrends" />
         <activity android:name=".im_sys.ChatActivity" />
         <activity android:name=".formulation_targets.FormulationTargetsPage" />
         <activity android:name=".login_registe.RegistePageActivity" />
