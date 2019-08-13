@@ -77,7 +77,7 @@ public class LoginPagePresenter implements InputTextChecked {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 6) {
+                if (charSequence.length() >= 6) {
                     pwdsize(1);
                 } else {
                     pwdsize(0);

@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initOpenApi() {
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(this, true);
-        Bmob.initialize(this, "e1d39fe30fd8389b9e26bea8d9f3207f");
+        /*JMessageClient.setDebugMode(true);
+        JMessageClient.init(this, true);*/
+        /*Bmob.initialize(this, "e1d39fe30fd8389b9e26bea8d9f3207f");*/
     }
 }

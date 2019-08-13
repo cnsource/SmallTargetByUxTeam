@@ -7,12 +7,14 @@
 <de.hdodenhof.circleimageview.CircleImageView
     android:layout_width="44dp"
     android:layout_height="44dp"
+    android:src="@drawable/aurora_headicon_default"
     android:layout_centerInParent="true"
     android:layout_alignParentLeft="true"
     android:layout_margin="10dp"
     android:id="@+id/user_head_img"
     />
     <TextView
+        android:textColor="#000"
         android:textSize="18sp"
         android:gravity="center|left"
         android:text="Nick"
@@ -29,6 +31,7 @@
         android:layout_marginRight="14dp"
         android:layout_width="match_parent"
         android:layout_height="26dp"
+        android:textColor="#444"
         android:layout_marginLeft="8dp"
         android:id="@+id/user_signture"
         android:layout_toRightOf="@id/user_head_img"/>

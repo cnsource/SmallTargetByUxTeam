@@ -21,7 +21,6 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.util.V;
 
 public class PlanPagePresenter {
     private PlanPage planPage;

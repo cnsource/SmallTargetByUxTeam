@@ -1,13 +1,19 @@
 package com.uxteam.starget.config_pkg;
 
 import cn.jpush.im.android.api.event.ContactNotifyEvent;
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
 
-@Entity
 public class MyFrendsRequest extends ContactNotifyEvent {
-    @Id
-    private long id;
+    private ContactNotifyEvent contactNotifyEvent;
+
+    public MyFrendsRequest(ContactNotifyEvent contactNotifyEvent) {
+        this.contactNotifyEvent = contactNotifyEvent;
+    }
+
+    @Override
+    public String getFromUsername() {
+        return contactNotifyEvent.getFromUsername();
+    }
+
     private boolean dealState;
 
     public boolean isDealState() {
@@ -18,11 +24,4 @@ public class MyFrendsRequest extends ContactNotifyEvent {
         this.dealState = dealState;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

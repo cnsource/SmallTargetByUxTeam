@@ -1,5 +1,6 @@
 package com.uxteam.starget.app_utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,5 +32,15 @@ public class DateUtils {
         date = calendar.getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
         return df.format(date);
+    }
+    public static Date getDate(String time) {
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date=null;
+        try {
+            date=format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

@@ -1,6 +1,5 @@
 package com.uxteam.starget.im_sys;
 
-import android.os.Message;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +9,8 @@ import com.uxteam.starget.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.im.android.api.model.Message;
 
 public class ChatActivityPresender {
     private ChatActivity chatActivity;
@@ -44,7 +45,7 @@ public class ChatActivityPresender {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.back:
-
+                            chatActivity.close();
                         break;
                     case R.id.contact_person_info:
 

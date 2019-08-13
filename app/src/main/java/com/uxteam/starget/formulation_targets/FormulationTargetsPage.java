@@ -40,7 +40,7 @@ public class FormulationTargetsPage extends AppCompatActivity {
     }
 
     private void bindViewControl() {
-        inputLayout=findViewById(R.id.input_view);
+        inputLayout = findViewById(R.id.input_view);
         recyclerView = findViewById(R.id.ftp_rec_targets);
         addFab = findViewById(R.id.ftp_add_fab);
         cencleFab = findViewById(R.id.ftp_cencle_fab);
@@ -50,25 +50,27 @@ public class FormulationTargetsPage extends AppCompatActivity {
         endTime = findViewById(R.id.endtime);
     }
 
-    public void bindViewEvent(View.OnClickListener clickListener, FTPRecAdt ftpRecAdt, SpinnerAdapter spinnerAdapter, FabBehaviorAnimator behaviorAnimator) {
+    public void bindViewEvent(View.OnClickListener clickListener, FTPRecAdt ftpRecAdt, FabBehaviorAnimator behaviorAnimator) {
         addFab.setOnClickListener(clickListener);
         cencleFab.setOnClickListener(clickListener);
         reportBtn.setOnClickListener(clickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(ftpRecAdt);
-        spinner.setAdapter(spinnerAdapter);
         setFabBehaviorAnimator(behaviorAnimator);
     }
 
     public String getTargetContent() {
         return edit.getText().toString();
     }
-    public User getSupervisorSelected(){
+
+    public User getSupervisorSelected() {
         return (User) spinner.getSelectedItem();
     }
-    public int getgetSupervisorSelectedId(){
+
+    public int getgetSupervisorSelectedId() {
         return (int) spinner.getSelectedItemId();
     }
+
     public void displayEdit(int visiable) {
         edit.setText("");
         endTime.setText(DateUtils.getNextDay());
@@ -85,8 +87,13 @@ public class FormulationTargetsPage extends AppCompatActivity {
         else
             fabBehaviorAnimator.fabreset(addFab, cencleFab);
     }
-    public void refreshRecAdt(){
-        Log.i("调用了",""+ recyclerView.getAdapter().getItemCount());
+
+    public void setSpinnerAdt(SpinnerAdapter adt) {
+        spinner.setAdapter(adt);
+    }
+
+    public void refreshRecAdt() {
+        Log.i("调用了", "" + recyclerView.getAdapter().getItemCount());
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
+import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFrends extends AppCompatActivity {
@@ -20,13 +22,14 @@ public class MyFrends extends AppCompatActivity {
     private TextView frendRequestNotofy;
     private ImageView addUser;
     private CircleImageView myHeadimg;
+    private MyFrendsPresenter myFrendsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.self_my_frends_list);
         bindView();
-        new MyFrendsPresenter(this).load();
+        myFrendsPresenter = new MyFrendsPresenter(this).load();
     }
 
     private void bindView() {
@@ -43,6 +46,23 @@ public class MyFrends extends AppCompatActivity {
         frendRequestNotofy.setOnClickListener(clickListener);
     }
 
+    public void setMyHeadimg() {
+        Glide.with(this).load(BmobUser.getCurrentUser(User.class)).error(R.drawable.aurora_headicon_default).into(myHeadimg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myFrendsPresenter.onDestoryToDo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myFrendsPresenter.getNetList();
+        refreshfrendsList();
+    }
+
     public void setFrendRequestNotofy(String text) {
         this.frendRequestNotofy.setText(text);
     }
@@ -51,6 +71,7 @@ public class MyFrends extends AppCompatActivity {
         frendsList.getAdapter().notifyDataSetChanged();
     }
     public void loadMyHeadImg(String path){
+
         Glide.with(this).load(path).into(myHeadimg);
     }
 }

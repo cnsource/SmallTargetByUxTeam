@@ -43,6 +43,7 @@ public class RegistePagePresenter implements View.OnClickListener {
     private RegistePageActivity registePageActivity;
     private EventHandler eventHandler;
     private File file;
+    private String path;
     private String TAG = "上传进度";
     private boolean CHOOSEICON = false;
     private int BmobInfoRegisteResult = 0;
@@ -159,6 +160,10 @@ public class RegistePagePresenter implements View.OnClickListener {
         JMInfoRegisteResult = 0;
         User user = new User();
         user.setUsername(registePageActivity.getTel());
+        if (CHOOSEICON) {
+            user.setAvatarUri("small-target.test.upcdn.net/head/"+registePageActivity.getTel()+".jpg");
+            upLoadHeadIcon();
+        }
         user.setNickName(registePageActivity.getNickName());
         user.setPassword(registePageActivity.getPwd());
         user.setCachePwd(registePageActivity.getPwd());
@@ -176,7 +181,7 @@ public class RegistePagePresenter implements View.OnClickListener {
         });
         RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
         optionalUserInfo.setNickname(registePageActivity.getNickName());
-
+        optionalUserInfo.setAvatar(file.getAbsolutePath());
         JMessageClient.register(registePageActivity.getTel(), registePageActivity.getPwd(), optionalUserInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -189,9 +194,7 @@ public class RegistePagePresenter implements View.OnClickListener {
 
             }
         });
-        if (CHOOSEICON) {
-            upLoadHeadIcon();
-        }
+
         unRegisteEventHandler();
     }
 
@@ -241,7 +244,6 @@ public class RegistePagePresenter implements View.OnClickListener {
         } catch (Exception e) {
             Log.i("捕获异常2", e.getMessage());
         }
-
     }
 
     private String getPAth(Uri uri) {

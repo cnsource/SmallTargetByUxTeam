@@ -62,6 +62,9 @@ public class ChatActivity extends AppCompatActivity {
         else
             chatMsgList.scrollToPosition(0);
     }
+    public void close(){
+        finish();
+    }
     public void closeRefresh(){
         loadHistoryMsg.setRefreshing(false);
     }

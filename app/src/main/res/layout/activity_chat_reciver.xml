@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+    android:layout_height="wrap_content">
+<cn.jiguang.imui.view.CircleImageView
+    android:layout_width="44dp"
+    android:layout_height="44dp"
+    android:src="@drawable/aurora_headicon_default"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    android:id="@+id/char_reciver_head"/>
+    <TextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_toRightOf="@id/char_reciver_head"
+        android:text="NickName"
+        android:id="@+id/chat_reciver_nickname"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/chat_reciver_msgcontent"
+        android:layout_below="@id/chat_reciver_nickname"
+        android:layout_toRightOf="@id/char_reciver_head"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:layout_marginRight="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

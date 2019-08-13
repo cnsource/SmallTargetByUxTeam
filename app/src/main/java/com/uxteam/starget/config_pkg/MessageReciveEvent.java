@@ -9,5 +9,6 @@ public interface MessageReciveEvent {
     void onEventMainThread(MessageEvent messageEvent);
     void onEvent(OfflineMessageEvent offlineMessageEvent);
     void onEventMainThread(OfflineMessageEvent offlineMessageEvent);
-    void onEvent(MyFrendsRequest frendsRequest);
+    void onEvent(ContactNotifyEvent contactNotifyEvent);
+    void onEventMainThread(ContactNotifyEvent contactNotifyEvent);
 }

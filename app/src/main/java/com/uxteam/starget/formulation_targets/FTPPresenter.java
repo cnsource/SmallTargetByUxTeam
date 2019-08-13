@@ -35,11 +35,11 @@ public class FTPPresenter implements FabBehaviorAnimator {
 
     public FTPPresenter(FormulationTargetsPage activity) {
         this.activity = activity;
-        initSupervisorList();
     }
 
     public FTPPresenter load() {
-        activity.bindViewEvent(onClickListenerProvider(), adtProvider(), supervisorListAdtProvider(), this);
+        initSupervisorList();
+        activity.bindViewEvent(onClickListenerProvider(), adtProvider(), this);
         activity.displayEdit(View.INVISIBLE);
         return this;
     }
@@ -67,18 +67,18 @@ public class FTPPresenter implements FabBehaviorAnimator {
     }
 
     private void saveTargets() {
-        final List<String> err=new ArrayList<>();
-        for (Target target:targets){
+        final List<String> err = new ArrayList<>();
+        for (Target target : targets) {
             target.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
-                    if (e!=null){
+                    if (e != null) {
                         err.add(e.getMessage());
                     }
                 }
             });
         }
-        Toast.makeText(activity, "成功发布"+(targets.size()-err.size())+"个,失败"+err.size()+"个", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "成功发布" + (targets.size() - err.size()) + "个,失败" + err.size() + "个", Toast.LENGTH_SHORT).show();
     }
 
     private void addTargets(boolean fabState) {
@@ -124,30 +124,24 @@ public class FTPPresenter implements FabBehaviorAnimator {
             @Override
             public void gotResult(int responseCode, String responseMessage, List<UserInfo> userInfoList) {
                 Toast.makeText(activity, "好友列表" + userInfoList.size(), Toast.LENGTH_SHORT).show();
-
                 if (0 == responseCode) {
                     //获取好友列表成功
-                    FindListener<User> findListener = new FindListener<User>() {
+                    List<BmobQuery<User>> queries = new ArrayList<BmobQuery<User>>();
+                    for (UserInfo user : userInfoList) {
+                        BmobQuery<User> query = new BmobQuery<>();
+                        query.addWhereEqualTo("username", user);
+                        queries.add(query);
+                    }
+
+                    BmobQuery<User> query = new BmobQuery<>();
+                    query.or(queries);
+                    query.findObjects(new FindListener<User>() {
                         @Override
                         public void done(List<User> list, BmobException e) {
                             supervisorlist.addAll(list);
+                            activity.setSpinnerAdt(supervisorListAdtProvider());
                         }
-                    };
-                    List<BmobQuery<User>> queries = new ArrayList<BmobQuery<User>>();
-                    if (userInfoList.size() > 1) {
-                        for (UserInfo user : userInfoList) {
-                            BmobQuery<User> query = new BmobQuery<>();
-                            query.addWhereEqualTo("username", user);
-                            queries.add(query);
-                        }
-                    } else {
-                        BmobQuery<User> query = new BmobQuery<>();
-                        query.addWhereEqualTo("username", userInfoList.get(0));
-                        query.findObjects(findListener);
-                    }
-                    BmobQuery<User> query = new BmobQuery<>();
-                    query.or(queries);
-                    query.findObjects(findListener);
+                    });
 
                 } else {
                     //获取好友列表失败
