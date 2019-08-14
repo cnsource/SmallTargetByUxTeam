@@ -43,11 +43,13 @@ public class MyApplicationClass extends Application implements MessageReciveEven
     @Override
     public void onEvent(OfflineMessageEvent offlineMessageEvent) {
         Log.i("离线消息","--------------");
+        EventBus.getDefault().postSticky(offlineMessageEvent);
     }
 
     @Override
     public void onEvent(MessageEvent messageEvent) {
         Log.i("在线消息","--------------");
+        EventBus.getDefault().postSticky(messageEvent);
     }
 
     @Override//主线程在线消息

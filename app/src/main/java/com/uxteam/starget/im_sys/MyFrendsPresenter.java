@@ -55,8 +55,11 @@ public class MyFrendsPresenter {
         FrendRecAdt frendRecAdt=new FrendRecAdt(myFrends.getApplicationContext(), users);
         frendRecAdt.setOnclickListener(new OnclickListener() {
             @Override
-            public void click() {
-                myFrends.startActivity(new Intent(myFrends,ChatActivity.class));
+            public void click(String username,String displayname) {
+                Intent in=new Intent(myFrends,ChatActivity.class);
+                in.putExtra("displayname",displayname);
+                in.putExtra("username",username);
+                myFrends.startActivity(in);
             }
         });
         return frendRecAdt;

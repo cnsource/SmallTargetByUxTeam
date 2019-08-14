@@ -36,13 +36,13 @@ public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FrendVH holder, int position) {
+    public void onBindViewHolder(@NonNull FrendVH holder,final int position) {
         Glide.with(context).load(users.get(position).getAvatar()).error(R.drawable.aurora_headicon_default).into(holder.circleImageView);
         holder.nickName.setText(users.get(position).getDisplayName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            onclickListener.click();
+            onclickListener.click(users.get(position).getUserName(),users.get(position).getDisplayName());
             }
 
         });
@@ -59,5 +59,5 @@ public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
     }
 }
 interface OnclickListener{
-    void click();
+    void click(String username,String displayname);
 }

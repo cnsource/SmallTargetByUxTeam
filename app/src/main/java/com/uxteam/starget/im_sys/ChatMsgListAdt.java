@@ -41,11 +41,9 @@ public class ChatMsgListAdt extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position)==0){
-            ((ChatMsgListReciverVH)holder).reciverNickName.setText(messages.get(position).getFromUser().getDisplayName());
             ((ChatMsgListReciverVH)holder).reciverMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));
 
         }else {
-            ((ChatMsgListSenderVH)holder).senderNickName.setText(messages.get(position).getFromUser().getDisplayName());
             ((ChatMsgListSenderVH)holder).senderMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));
 
         }
