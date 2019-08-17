@@ -2,13 +2,21 @@ package com.uxteam.starget.login_registe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
 
@@ -44,15 +52,14 @@ public class LoginPageActivity extends AppCompatActivity {
         userRegiste = findViewById(R.id.user_registe);
     }
 
-    public void refreshHeadIcon(File HeadIcon) {
-        if (HeadIcon != null) {
-            Glide.with(this).load(HeadIcon).centerCrop().into(cirHeadIcon);
-        }
+    public void resetHeadIcon() {
+        cirHeadIcon.setImageDrawable(getDrawable(R.drawable.aurora_headicon_default));
     }
 
     public void refreshLoginbtn(boolean bool) {
         loginbtn.setEnabled(bool);
     }
+
     public void transerParameter(){
         loginPagePresenter.transerParameter(account.getText().toString(),password.getText().toString());
     }
@@ -64,4 +71,7 @@ public class LoginPageActivity extends AppCompatActivity {
         userRegiste.setOnClickListener(clickListener);
     }
 
+    public void loadCirHeadIcon(String url) {
+        Glide.with(this).load(url).error(getDrawable(R.drawable.aurora_headicon_default)).into(cirHeadIcon);
+    }
 }

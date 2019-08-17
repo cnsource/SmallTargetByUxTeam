@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.uxteam.starget.R;
 import com.uxteam.starget.config_pkg.MyFrendsRequest;
 
@@ -28,13 +30,19 @@ public class MyFrendsPresenter {
     }
 
     public MyFrendsPresenter load() {
-        myFrends.bindViewEvent(clickListenerProvider(), adtProvider());
-        myFrends.setMyHeadimg();
+        myFrends.bindViewEvent(clickListenerProvider(), adtProvider(),refreshListenerProvider());
         getNetList();
         EventBus.getDefault().register(this);
         return this;
     }
-
+    private SwipeRefreshLayout.OnRefreshListener refreshListenerProvider(){
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNetList();
+            }
+        };
+    }
     private View.OnClickListener clickListenerProvider() {
         return new View.OnClickListener() {
             @Override
@@ -74,7 +82,7 @@ public class MyFrendsPresenter {
     private void getLocalList(){
 
     }
-    public void getNetList(){
+    private void getNetList(){
         ContactManager.getFriendList(new GetUserInfoListCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage, List<UserInfo> userInfoList) {
@@ -83,6 +91,7 @@ public class MyFrendsPresenter {
                     users.clear();
                     users.addAll(userInfoList);
                     myFrends.refreshfrendsList();
+                    myFrends.setRefresh(false);
                 } else {
                     //获取好友列表失败
                     Log.e("获取用户列表失败",responseMessage);

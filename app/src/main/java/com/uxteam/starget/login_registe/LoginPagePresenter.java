@@ -2,13 +2,16 @@ package com.uxteam.starget.login_registe;
 
 import android.content.Intent;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.UPYunUtils;
 import com.uxteam.starget.main_face.MainfacePage;
 import com.uxteam.starget.bmob_sys_pkg.User;
 
@@ -28,9 +31,10 @@ public class LoginPagePresenter implements InputTextChecked {
     private LoginPageActivity activity;
     private String account;
     private String pwd;
-    private int BMLoginResult=0;
-    private int JMLoginResult=0;
-    List<String> errorInfos=new ArrayList<>();
+    private int BMLoginResult = 0;
+    private int JMLoginResult = 0;
+    private List<String> errorInfos = new ArrayList<>();
+
     public LoginPagePresenter(LoginPageActivity activity) {
         this.activity = activity;
     }
@@ -51,18 +55,20 @@ public class LoginPagePresenter implements InputTextChecked {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 11) {
-                    namesize(1);
-                } else {
-                    namesize(0);
-                }
-                changeState();
-                activity.transerParameter();
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                if (editable.toString().length() == 11) {
+                    namesize(1);
+                    activity.loadCirHeadIcon(UPYunUtils.getSourcePath("head",editable.toString()+"",UPYunUtils.JPG));
+                } else {
+                    namesize(0);
+                    activity.resetHeadIcon();
+                }
+                changeState();
+                activity.transerParameter();
             }
         };
     }
@@ -77,18 +83,18 @@ public class LoginPagePresenter implements InputTextChecked {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() >= 6) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() >= 6) {
                     pwdsize(1);
                 } else {
                     pwdsize(0);
                 }
                 changeState();
                 activity.transerParameter();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         };
     }
@@ -115,6 +121,7 @@ public class LoginPagePresenter implements InputTextChecked {
     }
 
     private void loginEvent() {
+        errorInfos.clear();
         loginResult = 0;
         BmobUser.loginByAccount(account, pwd, new LogInListener<User>() {
             @Override
@@ -126,7 +133,7 @@ public class LoginPagePresenter implements InputTextChecked {
                     errorInfos.add(e.getMessage());
                     Log.e(getClass().getName(), "BmobLoginError-" + e.getMessage());
                 }
-                tryLogin(BMLoginResult,JMLoginResult);
+                tryLogin(BMLoginResult, JMLoginResult);
             }
         });
 
@@ -134,22 +141,24 @@ public class LoginPagePresenter implements InputTextChecked {
             @Override
             public void gotResult(int i, String s) {
                 if (i == 0) {
-                    JMLoginResult=1;
+                    JMLoginResult = 1;
                     Log.i("ResultJM", "登录成功" + loginResult);
                 } else {
                     errorInfos.add(s);
                     Log.e(getClass().getName(), "JMessageLoginError-" + s);
                 }
-                tryLogin(BMLoginResult,JMLoginResult);
+                tryLogin(BMLoginResult, JMLoginResult);
             }
         });
     }
 
-    private void tryLogin(int a,int b) {
-        if (a+b == 2) {
-            //  Todo  登陆成功
-            activity.startActivity(new Intent(activity, MainfacePage.class));
-            activity.finish();
+    private void tryLogin(int a, int b) {
+        if (errorInfos.size() == 0) {
+            if (a + b == 2) {
+                //  Todo  登陆成功
+                activity.startActivity(new Intent(activity, MainfacePage.class));
+                activity.finish();
+            }
         } else {
             StringBuilder builder = new StringBuilder("登录失败————");
             for (String str : errorInfos) {

@@ -1,6 +1,7 @@
 package com.uxteam.starget.bmob_sys_pkg;
 
 import cn.bmob.v3.BmobUser;
+
 public class User extends BmobUser {
     private String cachePwd;
     private String nickName;
@@ -13,8 +14,26 @@ public class User extends BmobUser {
     private int targetTNumber;
     private int targetFNumber;
     private int todayTargets;
+    private int todayTtarget;
     private int todaySupervision;
+    private int todayTsupervision;
     private String avatarNetPath;
+
+    public int getTodayTTarget() {
+        return todayTtarget;
+    }
+
+    public void setTodayTTarget(int todayTTarget) {
+        this.todayTtarget = todayTTarget;
+    }
+
+    public int getTodayTSupervision() {
+        return todayTsupervision;
+    }
+
+    public void setTodayTSupervision(int todayTSupervision) {
+        this.todayTsupervision = todayTSupervision;
+    }
 
     public String getAvatarNetPath() {
         return avatarNetPath;
@@ -33,6 +52,7 @@ public class User extends BmobUser {
     }
 
     private String avatarUri;
+
     public int getTodayTargets() {
         return todayTargets;
     }
@@ -120,6 +140,7 @@ public class User extends BmobUser {
     public void setTargetFNumber(int targetFNumber) {
         this.targetFNumber = targetFNumber;
     }
+
     public String getCachePwd() {
         return cachePwd;
     }

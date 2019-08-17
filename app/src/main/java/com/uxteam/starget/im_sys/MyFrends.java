@@ -3,6 +3,7 @@ package com.uxteam.starget.im_sys;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class MyFrends extends AppCompatActivity {
     private ImageView addUser;
     private CircleImageView myHeadimg;
     private MyFrendsPresenter myFrendsPresenter;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +35,22 @@ public class MyFrends extends AppCompatActivity {
     }
 
     private void bindView() {
-        myHeadimg = findViewById(R.id.frendList_MyIcon);
+        refreshLayout = findViewById(R.id.swiperfrends);
         addUser = findViewById(R.id.addFrend);
         frendRequestNotofy = findViewById(R.id.frendsRequestNotify);
         frendsList = findViewById(R.id.frendsList);
     }
 
-    public void bindViewEvent(View.OnClickListener clickListener, FrendRecAdt adt) {
+    public void bindViewEvent(View.OnClickListener clickListener, FrendRecAdt adt, SwipeRefreshLayout.OnRefreshListener refreshListener) {
         frendsList.setLayoutManager(new LinearLayoutManager(this));
         frendsList.setAdapter(adt);
         addUser.setOnClickListener(clickListener);
         frendRequestNotofy.setOnClickListener(clickListener);
+        refreshLayout.setOnRefreshListener(refreshListener);
     }
-
-    public void setMyHeadimg() {
-        Glide.with(this).load(BmobUser.getCurrentUser(User.class)).error(R.drawable.aurora_headicon_default).into(myHeadimg);
-    }
-
+    public void setRefresh(boolean bool){
+        refreshLayout.setRefreshing(bool);
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -59,8 +60,6 @@ public class MyFrends extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        myFrendsPresenter.getNetList();
-        refreshfrendsList();
     }
 
     public void setFrendRequestNotofy(String text) {
@@ -71,7 +70,6 @@ public class MyFrends extends AppCompatActivity {
         frendsList.getAdapter().notifyDataSetChanged();
     }
     public void loadMyHeadImg(String path){
-
         Glide.with(this).load(path).into(myHeadimg);
     }
 }

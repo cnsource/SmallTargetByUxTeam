@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.UPYunUtils;
 
 import java.util.List;
 
 import cn.jpush.im.android.api.model.UserInfo;
+import kotlin.ranges.UIntProgression;
 
 public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
     private Context context;
@@ -37,7 +39,7 @@ public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
 
     @Override
     public void onBindViewHolder(@NonNull FrendVH holder,final int position) {
-        Glide.with(context).load(users.get(position).getAvatar()).error(R.drawable.aurora_headicon_default).into(holder.circleImageView);
+        Glide.with(context).load(UPYunUtils.getSourcePath("head",users.get(position).getUserName(),UPYunUtils.JPG)).error(R.drawable.aurora_headicon_default).into(holder.circleImageView);
         holder.nickName.setText(users.get(position).getDisplayName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

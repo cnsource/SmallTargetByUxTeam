@@ -99,7 +99,7 @@ public class ChatActivityPresender {
     }
 
     private ChatMsgListAdt adtProvider() {
-        return new ChatMsgListAdt(chatActivity.getApplicationContext(), messages);
+        return new ChatMsgListAdt(chatActivity.getApplicationContext(), messages,username);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

@@ -5,7 +5,8 @@ import android.view.View;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.uxteam.starget.formulation_targets.FormulationTargetsPage;
+import com.uxteam.starget.formulation_targets.FormulationActivity;
+
 
 public class TargetDymicPagePresenter {
     private TargetDymicPage targetDymicPage;
@@ -30,7 +31,7 @@ public class TargetDymicPagePresenter {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                targetDymicPage.startActivity(new Intent(targetDymicPage.getContext(), FormulationTargetsPage.class));
+                targetDymicPage.startActivity(new Intent(targetDymicPage.getContext(), FormulationActivity.class));
             }
         };
     }

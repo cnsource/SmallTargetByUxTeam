@@ -1,4 +1,4 @@
-package com.uxteam.starget.im_sys;
+package com.uxteam.starget.app_utils;
 
 import android.util.Log;
 

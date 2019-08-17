@@ -12,7 +12,7 @@
         android:layout_marginTop="-40dp"
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:src="@drawable/ic_login_head_icon"
+        android:src="@drawable/aurora_headicon_default"
         />
     <EditText
         android:maxLength="11"

@@ -17,17 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#3993DD"
-            android:gravity="center">
+            android:gravity="center|right">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/frendList_MyIcon"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="4dp"
-                android:padding="6dp"
-                />
 
             <TextView
 
@@ -54,28 +45,34 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:background="#fff"
-        android:text="新朋友"
-        android:textColor="#000"
-        android:textSize="18sp"
-        android:gravity="center|left"
-        android:paddingLeft="10dp"
         android:id="@+id/frendsRequestNotify"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_below="@id/appbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/appbar"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#fff"
         android:drawableRight="@drawable/ic_into"
         android:drawablePadding="16dp"
-        />
+        android:gravity="center|left"
+        android:paddingLeft="10dp"
+        android:text="新朋友"
+        android:textColor="#000"
+        android:textSize="18sp" />
 
-<androidx.recyclerview.widget.RecyclerView
-    tools:listitem="@layout/frends_rec_item"
-    android:id="@+id/frendsList"
-    android:layout_below="@id/frendsRequestNotify"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperfrends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/frendsRequestNotify">
 
-</androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frendsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/frends_rec_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

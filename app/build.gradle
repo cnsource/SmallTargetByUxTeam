@@ -68,7 +68,8 @@ dependencies {
     implementation 'cn.jiguang.imui:messagelist:0.8.0'
     /*---------------EventBus---------------------------*/
     implementation 'org.greenrobot:eventbus:3.1.1'
-    /*-----------------ObjectBox-----------*/
+    /*-----------------volley-----------*/
+    implementation 'com.android.volley:volley:1.1.1'
     /*-------------------------------------------------------------*/
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'

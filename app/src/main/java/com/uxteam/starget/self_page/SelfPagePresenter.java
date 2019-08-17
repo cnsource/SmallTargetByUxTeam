@@ -37,6 +37,7 @@ public class SelfPagePresenter {
                 BmobUser.logOut();
                 JMessageClient.logout();
                 selfPage.startActivity(new Intent(selfPage.getContext(), LoginPageActivity.class));
+                selfPage.closePage();
                 Toast.makeText(selfPage.getContext(), "退出登录成功", Toast.LENGTH_SHORT).show();
             }
         };

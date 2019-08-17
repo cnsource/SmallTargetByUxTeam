@@ -13,6 +13,7 @@ import com.uxteam.starget.bmob_sys_pkg.User;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.DeviceInfo;
 import cn.jpush.im.api.BasicCallback;
 
 public class MainActivity extends AppCompatActivity {

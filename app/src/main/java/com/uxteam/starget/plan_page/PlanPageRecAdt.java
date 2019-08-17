@@ -11,8 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.Target;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 
 public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
     private Context context;
@@ -33,11 +41,29 @@ public class PlanPageRecAdt extends RecyclerView.Adapter<PlanPageRecVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlanPageRecVH holder, int position) {
+    public void onBindViewHolder(@NonNull final PlanPageRecVH holder, int position) {
         holder.startTime.setText(targets.get(position).getCreatedAt());
         if (ViewSign == 0) {
-            if (targets.get(position).getSupervisor() != null)
-                holder.supervisor.append(targets.get(position).getSupervisor().getNickName());
+            holder.supervisor.setVisibility(View.VISIBLE);
+            if (targets.get(position).getSupervisor() != null) {
+                BmobQuery<User> userBmobQuery = new BmobQuery<>();
+                userBmobQuery.addWhereEqualTo("objectId",targets.get(position).getSupervisor().getObjectId());
+                userBmobQuery.findObjects(new FindListener<User>() {
+                    @Override
+                    public void done(final List<User> list, BmobException e) {
+                        JMessageClient.getUserInfo(list.get(0).getNickName(), new GetUserInfoCallback() {
+                            @Override
+                            public void gotResult(int i, String s, UserInfo userInfo) {
+                                if (i==0){
+                                    holder.supervisor.setText("监督人："+userInfo.getDisplayName());
+                                }else {
+                                    holder.supervisor.setText("监督人："+list.get(0).getNickName());
+                                }
+                            }
+                        });
+                    }
+                });
+            }
         } else {
             holder.supervisor.setVisibility(View.GONE);
         }

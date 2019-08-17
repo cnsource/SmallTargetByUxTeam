@@ -20,6 +20,7 @@ import com.upyun.library.listener.UpCompleteListener;
 import com.upyun.library.listener.UpProgressListener;
 import com.upyun.library.utils.UpYunUtils;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.UPYunUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
@@ -199,23 +200,8 @@ public class RegistePagePresenter implements View.OnClickListener {
     }
 
     private void upLoadHeadIcon() {
-        ParallelUploader parallelUploader = new ParallelUploader("small-target", "qwe", UpYunUtils.md5("46ASahJopHUgjg9MWEWC0b9WTEt4kEoR"));
-        parallelUploader.setCheckMD5(true);
-        parallelUploader.setOnProgressListener(new UpProgressListener() {
-            @Override
-            public void onRequestProgress(long bytesWrite, long contentLength) {
-                Log.e(TAG, bytesWrite + ":" + contentLength);
-            }
-        });
-        parallelUploader.upload(file, "/head/" + registePageActivity.getTel() + ".jpg", null, new UpCompleteListener() {
-            @Override
-            public void onComplete(boolean isSuccess, String result) {
-                if (isSuccess){
-
-                }
-                Log.e(TAG, "isSuccess:" + isSuccess + "  result:" + result);
-            }
-        });
+        String path= UPYunUtils.getUPLoadPath("head",registePageActivity.getTel(),UPYunUtils.JPG);
+        UPYunUtils.upLoadFile(file,path);
     }
 
     public void chooseHeadIconResult(Uri uri) {
