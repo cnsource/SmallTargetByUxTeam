@@ -21,6 +21,7 @@ import com.upyun.library.listener.UpProgressListener;
 import com.upyun.library.utils.UpYunUtils;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.UPYunUtils;
+import com.uxteam.starget.app_utils.UpLoadResultListener;
 import com.uxteam.starget.bmob_sys_pkg.User;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
@@ -200,8 +201,17 @@ public class RegistePagePresenter implements View.OnClickListener {
     }
 
     private void upLoadHeadIcon() {
-        String path= UPYunUtils.getUPLoadPath("head",registePageActivity.getTel(),UPYunUtils.JPG);
-        UPYunUtils.upLoadFile(file,path);
+        String path= UPYunUtils.getUPLoadPath(UPYunUtils.PATH_HEAD,registePageActivity.getTel(),UPYunUtils.JPG);
+        UPYunUtils.upLoadFile(file, path, new UpLoadResultListener() {
+            @Override
+            public void result(boolean isSuccess, String resultInfo) {
+                if (isSuccess){
+                    Toast.makeText(registePageActivity, "头像上传成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(registePageActivity, "头像上传失败"+resultInfo, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void chooseHeadIconResult(Uri uri) {

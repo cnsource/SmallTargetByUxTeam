@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".formulation_targets.FormulationActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="#1A8FE3"
         android:id="@+id/toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             <Button
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/target_report_btn"
-                android:background="#fff"
+                android:background="#0fff"
                 android:textSize="18sp"
                 android:paddingRight="8dp"
                 android:drawableLeft="@drawable/ic_report_target"
@@ -44,14 +45,62 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <EditText
+        android:background="#fff"
         android:gravity="left|top"
         android:padding="4dp"
+        android:maxLength="100"
         android:hint="目标内容"
         android:layout_below="@id/toolbar"
         android:id="@+id/target_text"
         android:layout_width="match_parent"
-        android:layout_above="@id/tv"
+        android:layout_above="@id/img"
         android:layout_height="match_parent" />
+    <ImageView
+        android:visibility="gone"
+        android:layout_above="@id/selectimg"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:id="@+id/img"/>
+    <Button
+        android:background="#EE5622"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="上传目标内容图片"
+        android:id="@+id/selectimg"
+        android:layout_above="@id/tv"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/selectimg"
+        android:layout_alignTop="@id/selectimg"
+        android:layout_alignBottom="@id/selectimg"
+        android:orientation="horizontal"
+        >
+        <RadioGroup
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="公开"
+                android:checked="true"
+                android:buttonTintMode="multiply"
+                android:layout_weight="1"
+                android:id="@+id/radio0"/>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="私有"
+                android:buttonTintMode="multiply"
+                android:layout_weight="1"
+                android:id="@+id/radio1"/>
+        </RadioGroup>
+    </LinearLayout>
     <TextView
         android:textSize="16sp"
         android:layout_width="match_parent"

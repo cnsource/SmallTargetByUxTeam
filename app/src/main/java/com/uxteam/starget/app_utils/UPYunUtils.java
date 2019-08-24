@@ -1,6 +1,7 @@
 package com.uxteam.starget.app_utils;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.upyun.library.common.ParallelUploader;
 import com.upyun.library.listener.UpCompleteListener;
@@ -10,7 +11,12 @@ import com.upyun.library.utils.UpYunUtils;
 import java.io.File;
 
 public class UPYunUtils {
+
     private static final String TAG = "UPYunUtils";
+    public static final String PATH_TARGETS = "targets";
+    public static final String PATH_HEAD = "head";
+    public static final String PATH_AUDIT = "audit";
+
     public static final String JPG = "jpg";
     public static final String TXT = "txt";
 
@@ -22,7 +28,7 @@ public class UPYunUtils {
         return "/" + path + "/" + filename + "." + extrlname;
     }
 
-    public static void upLoadFile(File file, String upLoadPath) {
+    public static void upLoadFile(File file, String upLoadPath, final UpLoadResultListener upLoadResultListener) {
         ParallelUploader parallelUploader = new ParallelUploader("small-target", "qwe", UpYunUtils.md5("46ASahJopHUgjg9MWEWC0b9WTEt4kEoR"));
         parallelUploader.setCheckMD5(true);
         parallelUploader.setOnProgressListener(new UpProgressListener() {
@@ -34,10 +40,7 @@ public class UPYunUtils {
         parallelUploader.upload(file, upLoadPath, null, new UpCompleteListener() {
             @Override
             public void onComplete(boolean isSuccess, String result) {
-                if (isSuccess) {
-
-                }
-                Log.e(TAG, "isSuccess:" + isSuccess + "  result:" + result);
+               upLoadResultListener.result(isSuccess,result);
             }
         });
     }

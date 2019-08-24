@@ -10,13 +10,47 @@ public class Target extends BmobObject {
     private User supervisor;
     private boolean targetState;
     private String remark;
-
+    private String targetImg;
+    private String auditImg;
     private int select;
+    private boolean isSubmit;
+    private boolean isPublic;
+
+    public boolean isSubmit() {
+        return isSubmit;
+    }
+
+    public void setSubmit(boolean submit) {
+        isSubmit = submit;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public String getAuditImg() {
+        return auditImg;
+    }
+
+    public void setAuditImg(String auditImg) {
+        this.auditImg = auditImg;
+    }
+
+    public String getTargetImg() {
+        return targetImg;
+    }
+
+    public void setTargetImg(String targetImg) {
+        this.targetImg = targetImg;
+    }
 
     public String getStartTime() {
         return startTime;
     }
-
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }

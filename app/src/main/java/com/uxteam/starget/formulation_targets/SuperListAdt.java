@@ -56,7 +56,7 @@ public class SuperListAdt extends BaseAdapter {
         Glide.with(context).load(users.get(i).getAvatarNetPath()).error(R.drawable.aurora_headicon_default).into(imageView);
         TextView tv = v.findViewById(R.id.spinnerItem);
         String name = users.get(i).getNickName();
-        if (TextUtils.isEmpty(name.trim())) {
+        if (name!=null&&TextUtils.isEmpty(name.trim())) {
             tv.setText(users.get(i).getUsername());
         }else {
             tv.setText(name);

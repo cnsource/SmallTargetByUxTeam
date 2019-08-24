@@ -1,10 +1,17 @@
 package com.uxteam.starget.formulation_targets;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,23 +19,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.CloudFuncationListener;
 import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.app_utils.MyBmobUtils;
+import com.uxteam.starget.app_utils.UPYunUtils;
+import com.uxteam.starget.app_utils.UpLoadResultListener;
 import com.uxteam.starget.bmob_sys_pkg.Target;
 import com.uxteam.starget.bmob_sys_pkg.User;
+import com.uxteam.starget.login_registe.MyGlideEngine;
+import com.yalantis.ucrop.UCrop;
+import com.yalantis.ucrop.UCropActivity;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,20 +49,25 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
 import cn.jpush.im.android.api.model.UserInfo;
 
 public class FormulationActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_CHOOSE = 100;
     private ImageView backBtn;
     private Button reportBtn;
     private EditText target_content;
     private AppCompatSpinner spinner;
     private List<User> users = new ArrayList<>();
     private SuperListAdt superListAdt;
-
+    private Button uploadImg;
+    private File file;
+    private String filename;
+    private ImageView img;
+    private RadioGroup radioGroup;
+    private boolean isPublic =true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +78,34 @@ public class FormulationActivity extends AppCompatActivity {
     }
 
     private void bindView() {
+        radioGroup = findViewById(R.id.radiogroup);
+        img = findViewById(R.id.img);
         backBtn = findViewById(R.id.formulation_back);
         reportBtn = findViewById(R.id.target_report_btn);
         target_content = findViewById(R.id.target_text);
         spinner = findViewById(R.id.supervisor_seletor);
+        uploadImg=findViewById(R.id.selectimg);
     }
 
     private void bindViewEvent() {
+        uploadImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filename=(BmobUser.getCurrentUser(User.class).getObjectId())+new Date().getTime();
+                Log.i("FileName",filename);
+                startChoosePic();
+            }
+        });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i==R.id.radio0){
+                    isPublic=true;
+                }else {
+                    isPublic=false;
+                }
+            }
+        });
         superListAdt = new SuperListAdt(this, users);
         spinner.setAdapter(superListAdt);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +132,25 @@ public class FormulationActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
+                    if (file!=null)
+                        UPYunUtils.upLoadFile(file, UPYunUtils.getUPLoadPath(UPYunUtils.PATH_TARGETS, filename, UPYunUtils.JPG), new UpLoadResultListener() {
+                            @Override
+                            public void result(boolean isSuccess, String resultInfo) {
+                                if (isSuccess){
+                                    Toast.makeText(FormulationActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
+                                    if (file.exists())
+                                        file.delete();
+                                }else {
+                                    Toast.makeText(FormulationActivity.this, "文件上传失败"+resultInfo, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    else
+                        Toast.makeText(getApplicationContext(), "文件加载失败", Toast.LENGTH_SHORT).show();
                     Target target = new Target();
+                    target.setTargetImg(filename);
                     target.setTargetState(false);
+                    target.setPublic(isPublic);
                     target.setSupervisor((User) spinner.getSelectedItem());
                     target.setPublisher(BmobUser.getCurrentUser(User.class));
                     target.setTargetContent(target_content.getText().toString());
@@ -165,6 +219,57 @@ public class FormulationActivity extends AppCompatActivity {
         }
     });
 }
+
+    private void startChoosePic() {
+        Matisse.from(this)
+                .choose(MimeType.ofImage())
+                .countable(true)
+                .maxSelectable(1)
+                .gridExpectedSize(this.getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(new MyGlideEngine())
+                .forResult(REQUEST_CODE_CHOOSE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("ResultMethod","进入了");
+        switch (requestCode) {
+            case REQUEST_CODE_CHOOSE:
+                Uri uri=Matisse.obtainResult(data).get(0);
+                startCut(uri);
+                break;
+            case UCrop.REQUEST_CROP:
+                img.setVisibility(View.VISIBLE);
+                try {
+                    Bitmap bitmap = Bitmap.createBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    img.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    Log.i("捕获异常", e.getMessage());
+                }
+                break;
+            case UCrop.RESULT_ERROR:
+                Throwable t = UCrop.getError(data);
+                Log.i("UCropResult",t.toString());
+                break;
+        }
+    }
+
+    private void startCut(Uri uri) {
+        file = new File(getCacheDir() + "/target.jpg");
+        UCrop.Options options = new UCrop.Options();
+        options.setCompressionQuality(100);
+        options.setRootViewBackgroundColor(Color.WHITE);
+        options.setToolbarTitle("裁剪图片");
+        options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
+        UCrop.of(uri, Uri.fromFile(file))
+                .withAspectRatio(1, 1)
+                .withMaxResultSize(400, 1000)
+                .withOptions(options)
+                .start(this);
+    }
 
     private void loadSpinnerData() {
         ContactManager.getFriendList(new GetUserInfoListCallback() {

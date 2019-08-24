@@ -5,11 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <RelativeLayout
+        android:background="#1A8FE3"
         android:id="@+id/parte"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:textColor="#000"
             android:elevation="3dp"
             android:gravity="center"
             android:layout_centerInParent="true"

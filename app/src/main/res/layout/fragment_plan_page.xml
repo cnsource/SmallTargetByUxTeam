@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Toolbar
-            android:background="#fff"
+            android:background="#1A8FE3"
             android:title="Hello"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -33,12 +33,23 @@
     android:layout_width="match_parent"
     android:id="@+id/planpage_refreshView"
     android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-        tools:itemCount="5"
-        tools:listitem="@layout/plan_page_targetitem"
-        android:id="@+id/planpage_targets"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="5"
+            tools:listitem="@layout/plan_page_targetitem"
+            android:id="@+id/planpage_targets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="5"
+            tools:listitem="@layout/plan_page_super_targetitem"
+            android:id="@+id/planpage_supervision"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+    </FrameLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

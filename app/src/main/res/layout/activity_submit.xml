@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".plan_page.SubmitActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="#333"
+        android:id="@+id/text"
+        android:text="请选择一张证明本目标完成的图片以供审核"/>
+
+<ImageView
+    android:background="#aaa"
+    android:scaleType="centerInside"
+    android:src="@drawable/ic_add_card_icon"
+    android:id="@+id/yzmimg"
+    android:layout_below="@id/text"
+    android:layout_centerInParent="true"
+    android:layout_centerVertical="true"
+    android:layout_width="match_parent"
+    android:layout_height="200dp" />
+    <EditText
+        android:id="@+id/pluscontent"
+        android:maxLength="100"
+        android:hint="附加信息"
+        android:layout_marginTop="8dp"
+        android:gravity="left|top"
+        android:layout_above="@id/submitbtn"
+        android:layout_below="@id/yzmimg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/submitbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提交审核"/>
+</RelativeLayout>

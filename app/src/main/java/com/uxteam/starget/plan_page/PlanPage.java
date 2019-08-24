@@ -24,6 +24,7 @@ public class PlanPage extends Fragment {
     private SwipeRefreshLayout refreshView;
     private RecyclerView targets;
     private Spinner spinner;
+    private RecyclerView supervision;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -37,20 +38,36 @@ public class PlanPage extends Fragment {
     private void bindViewControl(View view) {
         refreshView = view.findViewById(R.id.planpage_refreshView);
         targets = view.findViewById(R.id.planpage_targets);
+        supervision = view.findViewById(R.id.planpage_supervision);
         spinner = view.findViewById(R.id.plan_page_spinner);
     }
-    public void bindControlEvent(SwipeRefreshLayout.OnRefreshListener refreshListener, PlanPageRecAdt targetadt, AdapterView.OnItemSelectedListener itemSelectedListener){
+
+    public void bindControlEvent(SwipeRefreshLayout.OnRefreshListener refreshListener, PlanPagePubRecAdt targetadt, PlanPageSupRecAdt supervisionadt, AdapterView.OnItemSelectedListener itemSelectedListener) {
         refreshView.setColorSchemeColors(Color.RED);
         refreshView.setOnRefreshListener(refreshListener);
         targets.setLayoutManager(new LinearLayoutManager(getContext()));
         targets.setAdapter(targetadt);
+        supervision.setLayoutManager(new LinearLayoutManager(getContext()));
+        supervision.setAdapter(supervisionadt);
         spinner.setOnItemSelectedListener(itemSelectedListener);
     }
-    public void closeRefresh(){
+
+    public void closeRefresh() {
         refreshView.setRefreshing(false);
     }
-     public void refreshData(){
-         Log.i("调用了",""+ targets.getAdapter().getItemCount());
+
+    public void showView(int i) {
+        if (i == 0) {
+            targets.setVisibility(View.VISIBLE);
+            supervision.setVisibility(View.INVISIBLE);
+        } else {
+            targets.setVisibility(View.INVISIBLE);
+            supervision.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void refreshData() {
+        supervision.getAdapter().notifyDataSetChanged();
         targets.getAdapter().notifyDataSetChanged();
-     }
+    }
 }
