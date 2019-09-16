@@ -2,6 +2,7 @@ package com.uxteam.starget.plan_page;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class PlanPagePubRecAdt extends RecyclerView.Adapter<PlanPagePubRecVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PlanPagePubRecVH holder, int position) {
+    public void onBindViewHolder(@NonNull final PlanPagePubRecVH holder, final int position) {
 
         holder.startTime.setText(targets.get(position).getCreatedAt());
         holder.supervisor.setVisibility(View.VISIBLE);
@@ -57,27 +58,43 @@ public class PlanPagePubRecAdt extends RecyclerView.Adapter<PlanPagePubRecVH> {
             userBmobQuery.findObjects(new FindListener<User>() {
                 @Override
                 public void done(final List<User> list, BmobException e) {
+                    name = list.get(0).getUsername();
+                    if (list.get(0).getAvatarUri()!=null)
+                    Glide.with(context).load("http://"+list.get(0).getAvatarUri()).error(R.drawable.aurora_headicon_default).into(holder.itemhead);
                     JMessageClient.getUserInfo(list.get(0).getNickName(), new GetUserInfoCallback() {
                         @Override
                         public void gotResult(int i, String s, UserInfo userInfo) {
                             if (i == 0) {
-                                name = list.get(0).getUsername();
-                                holder.supervisor.setText("监督人：" + userInfo.getDisplayName());
+                                holder.supervisor.setText(userInfo.getDisplayName());
                             } else {
-                                holder.supervisor.setText("监督人：" + list.get(0).getNickName());
+                                holder.supervisor.setText(list.get(0).getNickName());
                             }
                         }
                     });
                 }
             });
         }
-        Glide.with(context).load(UPYunUtils.getSourcePath(UPYunUtils.PATH_HEAD, BmobUser.getCurrentUser(User.class).getUsername(), UPYunUtils.JPG)).error(R.drawable.aurora_headicon_default).into(holder.itemhead);
         holder.targetContent.setText(targets.get(position).getTargetContent());
+        if (targets.get(position).isSubmit()){
+            holder.submitbtn.setText("等待审核");
+            holder.submitbtn.setEnabled(false);
+        }
+        if (targets.get(position).isAudited()){
+            if (targets.get(position).isAuditResult()){
+                holder.submitbtn.setText("审核结果：通过");
+                holder.submitbtn.setCompoundDrawables(null,null,context.getDrawable(R.drawable.ic_saily),null);
+            }else {
+                holder.submitbtn.setText("审核结果：未通过");
+                holder.submitbtn.setCompoundDrawables(null,null,context.getDrawable(R.drawable.ic_no_pass),null);
+            }
+                holder.submitbtn.setEnabled(false);
+        }
         holder.submitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SubmitActivity.class);
                 intent.putExtra("supervisor",name);
+                intent.putExtra("objectid",targets.get(position).getObjectId());
                 context.startActivity(intent);
             }
         });
@@ -90,4 +107,5 @@ public class PlanPagePubRecAdt extends RecyclerView.Adapter<PlanPagePubRecVH> {
     public int getItemCount() {
         return targets.size();
     }
+
 }

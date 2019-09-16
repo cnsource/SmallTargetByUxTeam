@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             app:navigationIcon="@drawable/ic_back">
-
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

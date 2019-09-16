@@ -12,31 +12,46 @@
         android:layout_height="wrap_content">
         <cn.jiguang.imui.view.CircleImageView
             android:layout_margin="8dp"
+            android:src="@drawable/aurora_headicon_default"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:id="@+id/plan_target_item_head"/>
         <TextView
+            android:layout_alignBottom="@id/plan_target_item_head"
             android:layout_alignTop="@id/plan_target_item_head"
-            android:layout_toRightOf="@id/plan_target_item_head"
-            android:id="@+id/supervisor"
-            android:padding="4dp"
-            android:layout_width="140dp"
+            android:paddingTop="4dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="监督人："
-            android:ellipsize="end"
+            android:layout_toRightOf="@id/plan_target_item_head"
+            android:id="@+id/text"
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_alignTop="@id/plan_target_item_head"
+            android:layout_toRightOf="@id/text"
+            android:id="@+id/supervisor"
+            android:padding="4dp"
+            android:layout_alignBottom="@id/text"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:singleLine="true"
+            android:ellipsize="marquee"
             android:gravity="center|left"
             android:textColor="#000"
             android:textSize="16sp"
             />
         <TextView
-            android:layout_alignBottom="@id/supervisor"
-            android:layout_toRightOf="@id/supervisor"
             android:id="@+id/starttime"
             android:padding="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/plan_target_item_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00:00:00"
-            android:gravity="center|left"
+            android:gravity="center|right"
             android:textColor="#000"
             android:textSize="14sp"
             />
@@ -51,7 +66,7 @@
             android:textColor="#000"
             android:textSize="16sp"
             android:layout_toLeftOf="@id/targetimg"
-            android:layout_below="@+id/supervisor"
+            android:layout_below="@+id/starttime"
             android:layout_above="@+id/endtime"
             />
         <ImageView

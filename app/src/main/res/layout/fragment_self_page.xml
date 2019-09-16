@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:layout_margin="10dp"
-        android:elevation="5dp"
+        android:elevation="10dp"
         app:cardCornerRadius="7dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#7BB53E">
+            android:background="#F5F3BB">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/self_user_Icon"
@@ -25,22 +25,15 @@
                 android:layout_height="64dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:src="@mipmap/account_48" />
-
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:id="@+id/self_sex_icon"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/self_user_Icon"
-                android:src="@mipmap/male" />
+                android:src="@drawable/aurora_headicon_default" />
 
             <TextView
                 android:id="@+id/self_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/self_sex_icon"
+                android:layout_alignTop="@id/self_user_Icon"
+                android:layout_alignBottom="@id/self_user_Icon"
+                android:gravity="center|left"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_toRightOf="@id/self_user_Icon"

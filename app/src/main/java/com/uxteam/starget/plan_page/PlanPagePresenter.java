@@ -40,6 +40,7 @@ public class PlanPagePresenter {
             @Override
             public void onRefresh() {
                 //Todo  刷新数据显示
+                loadData();
                 planPage.closeRefresh();
             }
         };
@@ -66,7 +67,7 @@ public class PlanPagePresenter {
         };
     }
 
-    private void loadData() {
+    public void loadData() {
         publisherData();
         supervisorData();
     }
@@ -93,6 +94,7 @@ public class PlanPagePresenter {
         querySet.add(query);
         querySet.add(query2);
         BmobQuery<Target> querys = new BmobQuery<>();
+        querys.order("-createdAt");
         querys.and(querySet);
         querys.findObjects(new FindListener<Target>() {
             @Override
@@ -112,6 +114,8 @@ public class PlanPagePresenter {
         BmobQuery<Target> query = new BmobQuery<>();
         query.addWhereEqualTo("supervisor", BmobUser.getCurrentUser(User.class));
         query.include("publisher,supervisor");
+        BmobQuery<Target> query1=new BmobQuery<>();
+        query1.addWhereEqualTo("isAudited",false);
         BmobQuery<Target> query2 = new BmobQuery<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String createdAt = format.format(new Date()) + " 00:00:01";
@@ -128,8 +132,10 @@ public class PlanPagePresenter {
         query2.addWhereGreaterThanOrEqualTo("createdAt", date);
         List<BmobQuery<Target>> querySet = new ArrayList<>();
         querySet.add(query);
+        querySet.add(query1);
         querySet.add(query2);
         BmobQuery<Target> querys = new BmobQuery<>();
+        querys.order("-createdAt");
         querys.and(querySet);
         querys.findObjects(new FindListener<Target>() {
             @Override

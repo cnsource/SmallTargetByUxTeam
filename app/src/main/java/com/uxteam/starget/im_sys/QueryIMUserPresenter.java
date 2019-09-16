@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.MyBmobUtils;
+import com.uxteam.starget.app_utils.UserUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
@@ -15,11 +16,15 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.jpush.im.android.api.ContactManager;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 public class QueryIMUserPresenter {
     private QueryIMUser queryIMUser;
     private User user;
+    private String url;
 
     public QueryIMUserPresenter(QueryIMUser queryIMUser) {
         this.queryIMUser = queryIMUser;
@@ -70,7 +75,19 @@ public class QueryIMUserPresenter {
 
     private void showUserData(User user) {
         this.user=user;
+        url = null;
         Toast.makeText(queryIMUser, "查询到了"+user.getUsername(), Toast.LENGTH_SHORT).show();
+        if (user.getAvatarUri()!=null)
+            url ="http://"+user.getAvatarUri();
+        JMessageClient.getUserInfo(user.getUsername(), null, new GetUserInfoCallback(){
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                if (i==0){
+                    queryIMUser.reFreshView(url,userInfo.getDisplayName());
+                }
+            }
+        });
+
         queryIMUser.setUserInfolayout(View.VISIBLE);
     }
     private void queryUser(String username) {

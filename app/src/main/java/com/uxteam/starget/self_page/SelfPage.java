@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.UPYunUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
+import com.uxteam.starget.main_face.MainfacePage;
 
 import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -46,7 +47,8 @@ public class SelfPage extends Fragment {
         self_uname = view.findViewById(R.id.self_username);
     }
     public void refreshView(String userName, SelfPageRecAdt selfPageRecAdt, View.OnClickListener loginOutListener){
-        Glide.with(this).load(UPYunUtils.getSourcePath("head", BmobUser.getCurrentUser(User.class).getUsername(),UPYunUtils.JPG)).into(circleImageView);
+       User user= BmobUser.getCurrentUser(User.class);
+        Glide.with(this).load("http://"+user.getAvatarUri()).error(R.drawable.aurora_headicon_default).into(circleImageView);
         self_uname.setText(userName);
         recyclerView.setAdapter(selfPageRecAdt);
         loginOut.setOnClickListener(loginOutListener);

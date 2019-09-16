@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".plan_page.AuditActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/auditImg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart" />
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:textColor="#000"
+                android:id="@+id/audit_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/auditImg" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/passBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/audit_content"
+                android:layout_weight="1"
+                android:text="通过审核" />
+
+            <Button
+                android:id="@+id/failure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/audit_content"
+                android:layout_toRightOf="@id/passBtn"
+                android:layout_weight="1"
+                android:text="未通过审核" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

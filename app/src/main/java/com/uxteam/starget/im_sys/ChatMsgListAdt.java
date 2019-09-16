@@ -2,6 +2,7 @@ package com.uxteam.starget.im_sys;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.model.Message;
 
@@ -48,12 +52,26 @@ public class ChatMsgListAdt extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        final String[] url = {null};
+        BmobQuery<User> query=new BmobQuery<>();
+        query.addWhereEqualTo("username",username);
+        query.findObjects(new FindListener<User>(){
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e!=null||list.get(0)==null){
+                    Log.i("HasNull","--------");
+                }
+                else{
+                    if (list.get(0).getAvatarUri()!=null)
+                        url[0] ="http://"+list.get(0).getAvatarUri();
+                }}
+        });
         if (getItemViewType(position)==0){
-            Glide.with(context).load(UPYunUtils.getSourcePath("head",username,UPYunUtils.JPG)).error(R.drawable.aurora_headicon_default).into(((ChatMsgListReciverVH)holder).reciverHeadImg);
+            Glide.with(context).load(url[0]).error(R.drawable.aurora_headicon_default).into(((ChatMsgListReciverVH)holder).reciverHeadImg);
             ((ChatMsgListReciverVH)holder).reciverMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));
         }else {
             ((ChatMsgListSenderVH)holder).senderMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));
-            Glide.with(context).load(UPYunUtils.getSourcePath("head", BmobUser.getCurrentUser(User.class).getUsername(),UPYunUtils.JPG)).error(R.drawable.aurora_headicon_default).into(((ChatMsgListSenderVH)holder).senderHeadImg);
+            Glide.with(context).load("http://"+BmobUser.getCurrentUser(User.class).getAvatarUri()).error(R.drawable.aurora_headicon_default).into(((ChatMsgListSenderVH)holder).senderHeadImg);
         }
     }
 

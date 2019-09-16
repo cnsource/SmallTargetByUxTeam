@@ -20,6 +20,7 @@ import com.upyun.library.listener.UpCompleteListener;
 import com.upyun.library.listener.UpProgressListener;
 import com.upyun.library.utils.UpYunUtils;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.app_utils.UPYunUtils;
 import com.uxteam.starget.app_utils.UpLoadResultListener;
 import com.uxteam.starget.bmob_sys_pkg.User;
@@ -51,6 +52,7 @@ public class RegistePagePresenter implements View.OnClickListener {
     private int BmobInfoRegisteResult = 0;
     private int JMInfoRegisteResult = 0;
     private List<String> errorInfo = new ArrayList<>();
+    private String netName;
 
     public RegistePagePresenter(RegistePageActivity registePageActivity) {
         this.registePageActivity = registePageActivity;
@@ -162,8 +164,9 @@ public class RegistePagePresenter implements View.OnClickListener {
         JMInfoRegisteResult = 0;
         User user = new User();
         user.setUsername(registePageActivity.getTel());
+        netName = registePageActivity.getTel()+DateUtils.getTimeStamp();
         if (CHOOSEICON) {
-            user.setAvatarUri("small-target.test.upcdn.net/head/"+registePageActivity.getTel()+".jpg");
+            user.setAvatarUri("small-target.test.upcdn.net/head/"+ netName +".jpg");
             upLoadHeadIcon();
         }
         user.setNickName(registePageActivity.getNickName());
@@ -183,6 +186,7 @@ public class RegistePagePresenter implements View.OnClickListener {
         });
         RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
         optionalUserInfo.setNickname(registePageActivity.getNickName());
+        if(file!=null)
         optionalUserInfo.setAvatar(file.getAbsolutePath());
         JMessageClient.register(registePageActivity.getTel(), registePageActivity.getPwd(), optionalUserInfo, new BasicCallback() {
             @Override
@@ -201,17 +205,21 @@ public class RegistePagePresenter implements View.OnClickListener {
     }
 
     private void upLoadHeadIcon() {
-        String path= UPYunUtils.getUPLoadPath(UPYunUtils.PATH_HEAD,registePageActivity.getTel(),UPYunUtils.JPG);
-        UPYunUtils.upLoadFile(file, path, new UpLoadResultListener() {
-            @Override
-            public void result(boolean isSuccess, String resultInfo) {
-                if (isSuccess){
-                    Toast.makeText(registePageActivity, "头像上传成功", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(registePageActivity, "头像上传失败"+resultInfo, Toast.LENGTH_SHORT).show();
+        if (file==null){
+            Toast.makeText(registePageActivity, "您稍后可以继续上传头像", Toast.LENGTH_SHORT).show();
+        }else {
+            String path = UPYunUtils.getUPLoadPath(UPYunUtils.PATH_HEAD, netName, UPYunUtils.JPG);
+            UPYunUtils.upLoadFile(file, path, new UpLoadResultListener() {
+                @Override
+                public void result(boolean isSuccess, String resultInfo, String resultPath) {
+                    if (isSuccess) {
+                        Toast.makeText(registePageActivity, "头像上传成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(registePageActivity, "头像上传失败" + resultInfo, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            },registePageActivity);
+        }
     }
 
     public void chooseHeadIconResult(Uri uri) {

@@ -17,7 +17,7 @@ public class User extends BmobUser {
     private int todayTtarget;
     private int todaySupervision;
     private int todayTsupervision;
-    private String avatarNetPath;
+    private String avatarNetName;
 
     public int getTodayTTarget() {
         return todayTtarget;
@@ -35,12 +35,12 @@ public class User extends BmobUser {
         this.todayTsupervision = todayTSupervision;
     }
 
-    public String getAvatarNetPath() {
-        return avatarNetPath;
+    public String getAvatarNetName() {
+        return avatarNetName;
     }
 
-    public void setAvatarNetPath(String avatarNetPath) {
-        this.avatarNetPath = avatarNetPath;
+    public void setAvatarNetName(String avatarNetName) {
+        this.avatarNetName = avatarNetName;
     }
 
     public String getAvatarUri() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -38,9 +39,17 @@ public class TargetDymicPage extends Fragment {
         recyclerView = view.findViewById(R.id.dymic_targets_rec);
         fab = view.findViewById(R.id.dymic_open_add_target);
     }
-    public void bindViewEvent(SwipeRefreshLayout.OnRefreshListener refreshListener, View.OnClickListener clickListener){
+    public void bindViewEvent(SwipeRefreshLayout.OnRefreshListener refreshListener, View.OnClickListener clickListener,RecyclerView.Adapter adapter){
         refreshLayout.setOnRefreshListener(refreshListener);
-
+        refreshLayout.setRefreshing(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
         fab.setOnClickListener(clickListener);
+    }
+    public void closeFresh(){
+        refreshLayout.setRefreshing(false);
+    }
+    public void freshView(){
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

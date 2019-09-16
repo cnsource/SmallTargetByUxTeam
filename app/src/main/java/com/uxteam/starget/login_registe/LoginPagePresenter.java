@@ -18,8 +18,10 @@ import com.uxteam.starget.bmob_sys_pkg.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.LogInListener;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -62,7 +64,20 @@ public class LoginPagePresenter implements InputTextChecked {
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().length() == 11) {
                     namesize(1);
-                    activity.loadCirHeadIcon(UPYunUtils.getSourcePath("head",editable.toString()+"",UPYunUtils.JPG));
+                    BmobQuery<User> query=new BmobQuery<>();
+                    query.addWhereEqualTo("username",editable.toString()+"");
+                    Log.i("UserName",editable.toString()+"");
+                    query.findObjects(new FindListener<User>(){
+                          @Override
+                        public void done(List<User> list, BmobException e) {
+                              if (e!=null||list.get(0)==null){
+                                  Log.i("HasNull","--------");
+                              }
+                              else{
+                                  if (list.get(0).getAvatarUri()!=null)
+                                      activity.loadCirHeadIcon("http://"+list.get(0).getAvatarUri());
+                        }}
+                    });
                 } else {
                     namesize(0);
                     activity.resetHeadIcon();

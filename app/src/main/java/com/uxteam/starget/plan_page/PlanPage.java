@@ -1,6 +1,7 @@
 package com.uxteam.starget.plan_page;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,13 +26,16 @@ public class PlanPage extends Fragment {
     private RecyclerView targets;
     private Spinner spinner;
     private RecyclerView supervision;
+    private PlanPagePresenter planPagePresenter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plan_page, container, false);
         bindViewControl(view);
-        new PlanPagePresenter(this).load();
+        Log.i("PlanPage活动状态","creater");
+        planPagePresenter = new PlanPagePresenter(this);
+        planPagePresenter.load();
         return view;
     }
 
@@ -69,5 +73,19 @@ public class PlanPage extends Fragment {
     public void refreshData() {
         supervision.getAdapter().notifyDataSetChanged();
         targets.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        planPagePresenter.loadData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==121){
+            refreshData();
+        }
     }
 }

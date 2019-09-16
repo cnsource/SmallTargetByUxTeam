@@ -25,7 +25,7 @@ public class MyApplicationClass extends Application implements MessageReciveEven
         MobSDK.init(this);
         JMessageClient.setDebugMode(true);
         JMessageClient.init(this, true);
-        Bmob.initialize(this, "e1d39fe30fd8389b9e26bea8d9f3207f");
+        Bmob.initialize(this, "a7cdb42aecfc28da854e19503aa563e2");
         JMessageClient.registerEventReceiver(getApplicationContext());
     }
     @Override//好友请求消息

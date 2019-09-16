@@ -1,6 +1,7 @@
 package com.uxteam.starget.plan_page;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,38 +43,52 @@ public class PlanPageSupRecAdt extends RecyclerView.Adapter<PlanPageSupRecVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PlanPageSupRecVH holder, int position) {
+    public void onBindViewHolder(@NonNull final PlanPageSupRecVH holder, final int position) {
         BmobQuery<User> userBmobQuery = new BmobQuery<>();
         userBmobQuery.addWhereEqualTo("objectId", targets.get(position).getPublisher().getObjectId());
         userBmobQuery.findObjects(new FindListener<User>() {
             @Override
             public void done(final List<User> list, BmobException e) {
-                final User user = list.get(0);
-                Glide.with(context).load(UPYunUtils.getSourcePath("head", user.getUsername(), UPYunUtils.JPG)).into(holder.head);
-                JMessageClient.getUserInfo(user.getUsername(), new GetUserInfoCallback() {
-                    @Override
-                    public void gotResult(int i, String s, UserInfo userInfo) {
-                        if (i == 0) {
-                            holder.name.setText(userInfo.getDisplayName());
-                        } else {
-                            holder.name.setText(user.getUsername());
+                if (list != null) {
+                    final User user = list.get(0);
+                    Glide.with(context).load(UPYunUtils.getSourcePath("head", user.getUsername(), UPYunUtils.JPG)).into(holder.head);
+                    JMessageClient.getUserInfo(user.getUsername(), new GetUserInfoCallback() {
+                        @Override
+                        public void gotResult(int i, String s, UserInfo userInfo) {
+                            if (i == 0) {
+                                holder.name.setText(userInfo.getDisplayName());
+                            } else {
+                                holder.name.setText(user.getUsername());
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
 
         holder.content.setText(targets.get(position).getTargetContent());
-        holder.showstate.setText(holder.DENINE);
         holder.deninebtn.setVisibility(View.INVISIBLE);
         holder.passbtn.setVisibility(View.INVISIBLE);
-        holder.checkbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
+        if (targets.get(position).isSubmit()&&!targets.get(position).isAudited()) {
+            holder.checkbtn.setEnabled(true);
+            holder.checkbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(context,AuditActivity.class);
+                    intent.putExtra("audit-img",targets.get(position).getSubmitImgPath());
+                    intent.putExtra("audit-content",targets.get(position).getSubmitText());
+                    intent.putExtra("objectId",targets.get(position).getObjectId());
+                    context.startActivity(intent);
+                }
+            });
+            holder.checkbtn.setText("待审核");
+        }else if (targets.get(position).isAudited()){
+            holder.checkbtn.setEnabled(false);
+            holder.checkbtn.setText("已审核");
+        }else {
+            holder.checkbtn.setText("待提交");
+        }
     }
 
     @Override

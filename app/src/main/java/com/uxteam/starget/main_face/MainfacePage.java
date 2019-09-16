@@ -5,6 +5,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.uxteam.starget.R;
@@ -21,18 +23,22 @@ public class MainfacePage extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new PlanPage()).commit();
+                    showFragment(new PlanPage());
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new PlanPage()).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new TargetDymicPage()).commit();
+                    showFragment(new TargetDymicPage());
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new TargetDymicPage()).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new SelfPage()).commit();
+                    showFragment(new SelfPage());
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new SelfPage()).commit();
                     return true;
             }
             return false;
         }
     };
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,26 @@ public class MainfacePage extends AppCompatActivity {
         setContentView(R.layout.activity_mainface_page);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new PlanPage()).commit();
+        showFragment(new PlanPage());
+        // getSupportFragmentManager().beginTransaction().replace(R.id.page_container,new PlanPage()).commit();
+    }
+
+    private void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (currentFragment == null) {
+            transaction.add(R.id.page_container, fragment).show(fragment).commit();
+            currentFragment = fragment;
+        } else {
+            if (currentFragment != fragment) {
+                transaction.hide(currentFragment);
+                if (!fragment.isAdded()) {
+                    transaction.add(R.id.page_container, fragment).show(fragment).commit();
+                } else {
+                    transaction.show(fragment).commit();
+                }
+                currentFragment=fragment;
+            }
+        }
     }
 
 }

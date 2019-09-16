@@ -6,16 +6,51 @@ public class Target extends BmobObject {
     private String startTime;
     private String endTime;
     private String targetContent;
-    private User publisher;
-    private User supervisor;
-    private boolean targetState;
     private String remark;
     private String targetImg;
     private String auditImg;
+    private String submitImgPath;
+    private String submitText;
+    private User publisher;
+    private User supervisor;
     private int select;
+    private boolean targetState;
+    private boolean auditResult;
+    private boolean isAudited;
     private boolean isSubmit;
     private boolean isPublic;
 
+    public boolean isAudited() {
+        return isAudited;
+    }
+
+    public boolean isAuditResult() {
+        return auditResult;
+    }
+
+    public void setAuditResult(boolean auditResult) {
+        this.auditResult = auditResult;
+    }
+
+    public void setAudited(boolean audited) {
+        isAudited = audited;
+    }
+
+    public String getSubmitImgPath() {
+        return submitImgPath;
+    }
+
+    public void setSubmitImgPath(String submitImgPath) {
+        this.submitImgPath = submitImgPath;
+    }
+
+    public String getSubmitText() {
+        return submitText;
+    }
+
+    public void setSubmitText(String submitText) {
+        this.submitText = submitText;
+    }
     public boolean isSubmit() {
         return isSubmit;
     }

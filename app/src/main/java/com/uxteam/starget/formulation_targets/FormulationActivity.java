@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.CloudFuncationListener;
 import com.uxteam.starget.app_utils.DateUtils;
@@ -135,7 +134,7 @@ public class FormulationActivity extends AppCompatActivity {
                     if (file!=null)
                         UPYunUtils.upLoadFile(file, UPYunUtils.getUPLoadPath(UPYunUtils.PATH_TARGETS, filename, UPYunUtils.JPG), new UpLoadResultListener() {
                             @Override
-                            public void result(boolean isSuccess, String resultInfo) {
+                            public void result(boolean isSuccess, String resultInfo,String resultPath) {
                                 if (isSuccess){
                                     Toast.makeText(FormulationActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
                                     if (file.exists())
@@ -144,13 +143,14 @@ public class FormulationActivity extends AppCompatActivity {
                                     Toast.makeText(FormulationActivity.this, "文件上传失败"+resultInfo, Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        });
+                        },FormulationActivity.this);
                     else
                         Toast.makeText(getApplicationContext(), "文件加载失败", Toast.LENGTH_SHORT).show();
                     Target target = new Target();
                     target.setTargetImg(filename);
                     target.setTargetState(false);
                     target.setPublic(isPublic);
+                    target.setAudited(false);
                     target.setSupervisor((User) spinner.getSelectedItem());
                     target.setPublisher(BmobUser.getCurrentUser(User.class));
                     target.setTargetContent(target_content.getText().toString());
@@ -165,22 +165,24 @@ public class FormulationActivity extends AppCompatActivity {
                                 userQuery.findObjects(new FindListener<User>() {
                                     @Override
                                     public void done(List<User> list, BmobException e) {
-                                        User user=list.get(0);
-                                        Map<String, String> map = new HashMap<String, String>();
-                                        map.put("identity", MyBmobUtils.Identity_Publisher);
-                                        map.put("objectId", user.getObjectId());
-                                        map.put("todayTargets", (user.getTodayTargets() + 1) + "");
-                                        map.put("targetNumbers", (user.getTargetNumbers() + 1) + "");
-                                        MyBmobUtils.AccessBmobCloudFuncation(getApplicationContext(), " http://cloud.bmob.cn/65ceba774721fceb/update_user_key", map, new CloudFuncationListener() {
-                                            @Override
-                                            public void result(boolean result) {
-                                                if (result) {
-                                                    Toast.makeText(FormulationActivity.this, "更新用户数据成功", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    Toast.makeText(FormulationActivity.this, "更新用户数据失败", Toast.LENGTH_SHORT).show();
+                                        if (list != null) {
+                                            User user = list.get(0);
+                                            Map<String, String> map = new HashMap<String, String>();
+                                            map.put("identity", MyBmobUtils.Identity_Publisher);
+                                            map.put("objectId", user.getObjectId());
+                                            map.put("todayTargets", (user.getTodayTargets() + 1) + "");
+                                            map.put("targetNumbers", (user.getTargetNumbers() + 1) + "");
+                                            MyBmobUtils.AccessBmobCloudFuncation(getApplicationContext(), " http://cloud.bmob.cn/c629a4dcb2dd21a8/update_user_key", map, new CloudFuncationListener() {
+                                                @Override
+                                                public void result(boolean result, String response) {
+                                                    if (result) {
+                                                        Toast.makeText(FormulationActivity.this, "更新用户数据成功", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(FormulationActivity.this, "更新用户数据失败", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
                                 });
                             String id = ((User) spinner.getSelectedItem()).getObjectId();
@@ -194,9 +196,9 @@ public class FormulationActivity extends AppCompatActivity {
                                     map.put("identity", MyBmobUtils.Identity_Supervisor);
                                     map.put("objectId", user.getObjectId());
                                     map.put("todaySupervision", (user.getTodaySupervision() + 1) + "");
-                                    MyBmobUtils.AccessBmobCloudFuncation(getApplicationContext(), " http://cloud.bmob.cn/65ceba774721fceb/update_user_key", map, new CloudFuncationListener() {
+                                    MyBmobUtils.AccessBmobCloudFuncation(getApplicationContext(), " http://cloud.bmob.cn/c629a4dcb2dd21a8/update_user_key", map, new CloudFuncationListener() {
                                         @Override
-                                        public void result(boolean result) {
+                                        public void result(boolean result, String response) {
                                             if (result) {
                                                 loadSpinnerData();
                                                 Toast.makeText(FormulationActivity.this, "更新用户数据成功", Toast.LENGTH_SHORT).show();
@@ -238,8 +240,9 @@ public class FormulationActivity extends AppCompatActivity {
         Log.i("ResultMethod","进入了");
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE:
+                if (data!=null){
                 Uri uri=Matisse.obtainResult(data).get(0);
-                startCut(uri);
+                startCut(uri);}
                 break;
             case UCrop.REQUEST_CROP:
                 img.setVisibility(View.VISIBLE);

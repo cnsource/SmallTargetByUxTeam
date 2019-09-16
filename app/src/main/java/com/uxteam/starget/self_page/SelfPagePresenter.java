@@ -6,13 +6,18 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.google.gson.JsonArray;
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.CloudFuncationListener;
+import com.uxteam.starget.app_utils.MyBmobUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
 import com.uxteam.starget.im_sys.MyFrends;
 import com.uxteam.starget.login_registe.LoginPageActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.BmobUser;
 import cn.jpush.im.android.api.JMessageClient;
@@ -29,6 +34,7 @@ public class SelfPagePresenter {
                 getRecItem(),
                 loginOut()
         );
+        getInfo();
     }
     private View.OnClickListener loginOut(){
         return new View.OnClickListener() {
@@ -39,6 +45,7 @@ public class SelfPagePresenter {
                 selfPage.startActivity(new Intent(selfPage.getContext(), LoginPageActivity.class));
                 selfPage.closePage();
                 Toast.makeText(selfPage.getContext(), "退出登录成功", Toast.LENGTH_SHORT).show();
+
             }
         };
     }
@@ -56,6 +63,20 @@ public class SelfPagePresenter {
             return "设置昵称";
         }
         return BmobUser.getCurrentUser(User.class).getNickName();
+    }
+    private void getInfo(){
+        Map<String,String> map=new HashMap<>();
+        map.put("objectId",BmobUser.getCurrentUser(User.class).getObjectId()+"");
+        MyBmobUtils.AccessBmobCloudFuncation(selfPage.getContext(), "http://cloud.bmob.cn/c629a4dcb2dd21a8/self_page_info", map, new CloudFuncationListener() {
+            @Override
+            public void result(boolean result, String response) {
+                if (result){
+                    Toast.makeText(selfPage.getContext(), "CloudFunctionSuccessed!:"+response, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(selfPage.getContext(), "CloudFunctionError!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     private OnItemClickListener itemClickListenerProvider(){
         return new OnItemClickListener() {

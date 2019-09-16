@@ -20,7 +20,7 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/statedisplay"
-        android:text="待审核"
+        android:text="待\n审\n核"
         android:ems="1"
         android:gravity="center"
         android:textSize="16sp"
@@ -33,13 +33,14 @@
         android:layout_below="@id/head"
         />
     <TextView
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:text="这是监督目标内容"
         android:layout_below="@id/head"
         android:layout_toRightOf="@id/head"
         android:layout_above="@id/bottoml"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/targetcontent"/>

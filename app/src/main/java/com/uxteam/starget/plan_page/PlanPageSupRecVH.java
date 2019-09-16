@@ -13,8 +13,7 @@ import com.uxteam.starget.R;
 import cn.jiguang.imui.view.CircleImageView;
 
 public class PlanPageSupRecVH extends RecyclerView.ViewHolder {
-    public  final String PASS="已\n审\n核";
-    public  final String DENINE="待\n审\n核";
+
     public CircleImageView head;
     public TextView name;
     public TextView content;
