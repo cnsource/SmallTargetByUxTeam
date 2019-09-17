@@ -52,7 +52,7 @@ public class SuperListAdt extends BaseAdapter {
         }
         Log.i("SpinnerItem", "" + i);
         CircleImageView imageView = v.findViewById(R.id.headimg);
-        Glide.with(context).load(users.get(i).getAvatarNetName()).error(R.drawable.aurora_headicon_default).into(imageView);
+        Glide.with(context).load("http://"+users.get(i).getAvatarUri()).error(R.drawable.aurora_headicon_default).into(imageView);
         TextView tv = v.findViewById(R.id.spinnerItem);
         String name = users.get(i).getNickName();
         if (name!=null&&TextUtils.isEmpty(name.trim())) {
