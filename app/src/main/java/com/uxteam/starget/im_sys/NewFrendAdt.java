@@ -13,21 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.uxteam.starget.R;
+import com.uxteam.starget.bmob_sys_pkg.User;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 public class NewFrendAdt extends RecyclerView.Adapter<NewFrendVH> {
-    public NewFrendAdt(Context context, List<UserInfo> userInfos) {
+    public NewFrendAdt(Context context, List<UserInfo> userInfos, NewFrend.EventResult eventResult) {// todo 加接口处理事件
         this.context = context;
         this.userInfos = userInfos;
+        this.eventResult = eventResult;
     }
 
     private Context context;
     private List<UserInfo> userInfos;
+    private NewFrend.EventResult eventResult;
 
     @NonNull
     @Override
@@ -38,9 +44,17 @@ public class NewFrendAdt extends RecyclerView.Adapter<NewFrendVH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewFrendVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final NewFrendVH holder, final int position) {
         holder.username.setText(userInfos.get(position).getNickname());
-        Glide.with(context).load(userInfos.get(position).getAvatar()).into(holder.headImg);
+        BmobQuery<User> query=new BmobQuery<>();
+        query.addWhereEqualTo("username",userInfos.get(position).getUserName());
+        query.findObjects(new FindListener<User>() {
+            @Override
+            public void done(List<User> list, BmobException e) {
+                if (e==null&&list!=null)
+                    Glide.with(context).load("http://"+list.get(0).getAvatarUri()).into(holder.headImg);
+            }
+        });
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +69,7 @@ public class NewFrendAdt extends RecyclerView.Adapter<NewFrendVH> {
                             //接收好友请求失败
                             Log.e("接受好友请求失败",s);
                         }
+                        eventResult.CallBack(position);
                     }
                 });
             }
@@ -71,6 +86,7 @@ public class NewFrendAdt extends RecyclerView.Adapter<NewFrendVH> {
                         } else {
                             Log.e("拒绝好友请求失败",responseMessage);
                         }
+                        eventResult.CallBack(position);
                     }
                 });
             }

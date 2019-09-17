@@ -14,11 +14,14 @@ public class FrendVH extends RecyclerView.ViewHolder {
     public CircleImageView circleImageView;
     public TextView nickName;
     public TextView signture;
+    public TextView unreadMsg;
+
     public FrendVH(@NonNull View itemView) {
 
         super(itemView);
         circleImageView= itemView.findViewById(R.id.user_head_img);
         nickName= itemView.findViewById(R.id.user_nick_name);
         signture= itemView.findViewById(R.id.user_signture);
+        unreadMsg=itemView.findViewById(R.id.unreadmsg);
     }
 }

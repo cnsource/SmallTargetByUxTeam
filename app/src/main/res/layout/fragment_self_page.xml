@@ -17,11 +17,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F5F3BB">
+            android:background="#fff">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/self_user_Icon"
                 android:layout_width="64dp"
+                android:elevation="10dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
@@ -39,71 +40,97 @@
                 android:layout_toRightOf="@id/self_user_Icon"
                 android:text="UserName"
                 android:textSize="22sp" />
+            <TextView
+
+            android:id="@+id/pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/self_username"
+            android:layout_marginLeft="-24dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/self_user_Icon"
+            android:text="发布总数量："
+            android:textColor="#156899"
+            android:textSize="18sp" />
+            <TextView
+            android:id="@+id/pubCnt"
+                android:textStyle="bold"
+                android:gravity="center|left"
+                android:textColor="#000"
+                android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/pub"
+            android:layout_alignBottom="@id/pub"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/pub"/>
+
+
 
             <TextView
-                android:id="@+id/supervision"
+
+                android:id="@+id/sup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/self_username"
+                android:layout_below="@id/pub"
                 android:layout_marginLeft="-24dp"
                 android:layout_marginTop="30dp"
                 android:layout_toRightOf="@id/self_user_Icon"
-                android:text="监督能力"
+                android:text="监督总数量："
                 android:textColor="#156899"
                 android:textSize="18sp" />
-
             <TextView
-                android:id="@+id/implementation"
+                android:id="@+id/supCnt"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:gravity="center|left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/supervision"
-                android:layout_marginLeft="-24dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/self_user_Icon"
-                android:text="执行能力"
-                android:textColor="#156899"
-                android:textSize="18sp" />
-
+                android:layout_alignTop="@id/sup"
+                android:layout_alignBottom="@id/sup"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/sup"/>
             <TextView
-                android:id="@+id/aimCount"
+                android:id="@+id/btm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/implementation"
+                android:layout_below="@id/supCnt"
                 android:layout_marginLeft="-24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="30dp"
                 android:layout_toRightOf="@id/self_user_Icon"
-                android:text="目标总数"
-                android:textColor="#156899"
+                android:text="今日发布/监督："
+                android:textColor="#222"
                 android:textSize="18sp" />
-
             <TextView
-                android:id="@+id/finishCount"
+                android:id="@+id/btmCnt"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:gravity="center|left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/aimCount"
-                android:layout_marginLeft="-24dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/self_user_Icon"
-                android:text="完成数量"
-                android:textColor="#156899"
-                android:textSize="18sp" />
+                android:layout_alignTop="@id/btm"
+                android:layout_alignBottom="@id/btm"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/btm"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_content"
-                android:layout_width="match_parent"
+            android:id="@+id/card_content"
+            android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -129,6 +156,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="#FF6F59"
                 android:gravity="center"
+                android:layout_marginBottom="2dp"
                 android:text="退出登陆"
                 android:textSize="18sp" />
         </RelativeLayout>

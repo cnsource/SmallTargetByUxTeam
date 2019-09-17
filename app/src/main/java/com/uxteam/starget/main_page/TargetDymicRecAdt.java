@@ -54,7 +54,6 @@ public class TargetDymicRecAdt extends RecyclerView.Adapter<TargetDymicRecVH> {
                         public void gotResult(int i, String s, UserInfo userInfo) {
                             if (i == 0) {
                                 holder.name.setText(userInfo.getDisplayName());
-                                Log.i("User:",list.get(0).toString());
                             } else {
                                 holder.name.setText(targets.get(position).getPublisher().getUsername());
                             }

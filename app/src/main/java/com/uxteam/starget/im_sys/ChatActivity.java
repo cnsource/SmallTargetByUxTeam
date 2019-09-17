@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.uxteam.starget.R;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.Conversation;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -99,11 +100,13 @@ public class ChatActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         JMessageClient.exitConversation();
+        Conversation.createSingleConversation(username, null).resetUnreadCount();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Conversation.createSingleConversation(username, null).resetUnreadCount();
         JMessageClient.exitConversation();
         chatActivityPresender.unRegisteEventBus();
     }

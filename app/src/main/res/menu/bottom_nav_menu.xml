@@ -4,12 +4,13 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_aims"
-        android:title="交流" />
+        android:title="目标" />
 
     <item
+
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_frends"
-        android:title="目标" />
+        android:icon="@drawable/ic_dymic"
+        android:title="动态" />
 
     <item
         android:id="@+id/navigation_notifications"

@@ -38,6 +38,15 @@ public class DateUtils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
         return df.format(date);
     }
+    public static String getBeforeDay(int i) {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, i); //今天的时间加一天
+        date = calendar.getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(date);
+    }
     public static Date getDate(String time) {
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date=null;

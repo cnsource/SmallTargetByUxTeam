@@ -56,6 +56,10 @@ public class QueryIMUser extends AppCompatActivity {
         cardView.setVisibility(visiable);
         addBtn.setVisibility(visiable);
     }
+    public void setBtnstate(String text,boolean state){
+        addBtn.setEnabled(state);
+        addBtn.setText(text);
+    }
     public void reFreshView(String url,String name){
         if (url!=null)
         Glide.with(this).load(url).into(head);

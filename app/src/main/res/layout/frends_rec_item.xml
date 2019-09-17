@@ -22,6 +22,7 @@
         android:layout_height="28dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/user_nick_name"
+        android:layout_toLeftOf="@id/unreadmsg"
         android:layout_toRightOf="@id/user_head_img"/>
     <TextView
         android:layout_below="@id/user_nick_name"
@@ -32,8 +33,17 @@
         android:layout_width="match_parent"
         android:layout_height="26dp"
         android:textColor="#444"
+        android:layout_toLeftOf="@id/unreadmsg"
         android:layout_marginLeft="8dp"
         android:id="@+id/user_signture"
         android:layout_toRightOf="@id/user_head_img"/>
-
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/unreadmsg"
+        android:gravity="center"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/ic_message_tip"/>
 </RelativeLayout>

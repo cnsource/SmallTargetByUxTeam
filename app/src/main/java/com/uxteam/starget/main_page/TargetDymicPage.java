@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ public class TargetDymicPage extends Fragment {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
+    private Bundle savedInstanceState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,7 +32,6 @@ public class TargetDymicPage extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_main_page, container, false);
         bindViewControl(view);
-
         new TargetDymicPagePresenter(this).load();
         return view;
     }
@@ -46,6 +48,7 @@ public class TargetDymicPage extends Fragment {
         recyclerView.setAdapter(adapter);
         fab.setOnClickListener(clickListener);
     }
+
     public void closeFresh(){
         refreshLayout.setRefreshing(false);
     }

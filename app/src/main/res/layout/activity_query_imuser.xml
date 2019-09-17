@@ -58,16 +58,19 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent">
            <cn.jiguang.imui.view.CircleImageView
+               android:layout_marginTop="8dp"
                android:layout_width="48dp"
                android:layout_height="48dp"
                android:layout_centerHorizontal="true"
                android:src="@drawable/aurora_headicon_default"
                android:id="@+id/head"/>
            <TextView
+               android:gravity="center"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:textSize="18sp"
+               android:textSize="20sp"
                android:id="@+id/name"
+               android:layout_marginBottom="8dp"
                android:layout_below="@id/head"/>
        </RelativeLayout>
     </androidx.cardview.widget.CardView>

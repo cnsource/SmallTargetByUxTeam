@@ -19,6 +19,8 @@ import java.util.List;
 
 import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.OfflineMessageEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 
 public class MyFrendsPresenter {
@@ -49,16 +51,20 @@ public class MyFrendsPresenter {
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.addFrend:
+                        myFrends.setFrendRequestNotofy("新朋友");
                         myFrends.startActivity(new Intent(myFrends, QueryIMUser.class));
                         break;
                     case R.id.frendsRequestNotify:
+                        users.clear();
                         myFrends.startActivity(new Intent(myFrends, NewFrend.class));
                         break;
                 }
             }
         };
     }
-
+    public void unregiste(){
+        EventBus.getDefault().unregister(this);
+    }
     private FrendRecAdt adtProvider() {
         FrendRecAdt frendRecAdt=new FrendRecAdt(myFrends.getApplicationContext(), users);
         frendRecAdt.setOnclickListener(new OnclickListener() {
@@ -74,12 +80,7 @@ public class MyFrendsPresenter {
     }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void UserRequestEvent(MyFrendsRequest frendsRequest){
-        Toast.makeText(myFrends, "Post到了朋友列表界面", Toast.LENGTH_SHORT).show();
-
-        Log.i("好友申请事件",frendsRequest.getFromUsername());
-        myFrends.setFrendRequestNotofy(frendsRequest.getFromUsername()+"申请成为您的好友");
-    }
-    private void getLocalList(){
+        // Todo
 
     }
     private void getNetList(){
@@ -101,5 +102,15 @@ public class MyFrendsPresenter {
     }
     public void onDestoryToDo(){
         EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void messageEvent(MessageEvent messageEvent) {
+        myFrends.refreshfrendsList();
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void messageEvent(OfflineMessageEvent offlineMessageEvent) {
+
     }
 }

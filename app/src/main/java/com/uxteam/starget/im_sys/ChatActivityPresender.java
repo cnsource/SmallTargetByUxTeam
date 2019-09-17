@@ -1,6 +1,8 @@
 package com.uxteam.starget.im_sys;
 
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,21 +27,20 @@ import cn.jpush.im.android.api.model.Message;
 public class ChatActivityPresender {
     private ChatActivity chatActivity;
     private List<Message> messages = new ArrayList<>();
-    private String username;
+    private String username=null;
     private Conversation conversation;
 
     public ChatActivityPresender(ChatActivity chatActivity) {
-
+        EventBus.getDefault().register(this);
         this.chatActivity = chatActivity;
     }
 
     public ChatActivityPresender load(String username) {
         messages.clear();
-        EventBus.getDefault().register(this);
         chatActivity.initChatInput();
         this.username = username;
-        chatActivity.bindViewEvent(clickListenerProvider(), refreshListenerProvider(), adtProvider(), layoutManagerProvider());
         conversation = Conversation.createSingleConversation(username, null);
+        chatActivity.bindViewEvent(clickListenerProvider(), refreshListenerProvider(), adtProvider(), layoutManagerProvider());
         initMessage();
         return this;
     }
@@ -84,7 +85,9 @@ public class ChatActivityPresender {
                         chatActivity.close();
                         break;
                     case R.id.contact_person_info:
-
+                        Intent in=new Intent(chatActivity.getApplicationContext(),FrendUserInfoCard.class);
+                        in.putExtra("username",username);
+                        chatActivity.startActivity(in);
                         break;
                     case R.id.activity_chat_send_btn:
                         Message message = JMessageClient.createSingleTextMessage(username, null, chatActivity.getChatInput());
@@ -106,6 +109,7 @@ public class ChatActivityPresender {
     public void messageEvent(MessageEvent messageEvent) {
         Message message = messageEvent.getMessage();
         messages.add(0, message);
+        Log.i("AMW在线消息","************");
         chatActivity.refreshMsgList( 0);
     }
 
@@ -113,6 +117,7 @@ public class ChatActivityPresender {
     public void messageEvent(OfflineMessageEvent offlineMessageEvent) {
         if (conversation == offlineMessageEvent.getConversation()) {
             for (Message message : offlineMessageEvent.getOfflineMessageList()) {
+                Log.i("AMW离线消息","************");
                 messages.add(0, message);
             }
             chatActivity.refreshMsgList(0);

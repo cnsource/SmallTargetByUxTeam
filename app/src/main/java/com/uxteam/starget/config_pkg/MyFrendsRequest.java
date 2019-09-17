@@ -3,6 +3,10 @@ package com.uxteam.starget.config_pkg;
 import cn.jpush.im.android.api.event.ContactNotifyEvent;
 
 public class MyFrendsRequest extends ContactNotifyEvent {
+    public ContactNotifyEvent getContactNotifyEvent() {
+        return contactNotifyEvent;
+    }
+
     private ContactNotifyEvent contactNotifyEvent;
 
     public MyFrendsRequest(ContactNotifyEvent contactNotifyEvent) {

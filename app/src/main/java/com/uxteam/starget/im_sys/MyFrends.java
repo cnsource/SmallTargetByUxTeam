@@ -57,9 +57,12 @@ public class MyFrends extends AppCompatActivity {
         myFrendsPresenter.onDestoryToDo();
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        myFrendsPresenter.unregiste();
+        myFrendsPresenter.load();
     }
 
     public void setFrendRequestNotofy(String text) {

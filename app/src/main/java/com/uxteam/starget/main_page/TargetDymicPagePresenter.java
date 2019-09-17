@@ -8,14 +8,19 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.Target;
 import com.uxteam.starget.bmob_sys_pkg.User;
 import com.uxteam.starget.formulation_targets.FormulationActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.jpush.im.android.api.ContactManager;
@@ -33,7 +38,8 @@ public class TargetDymicPagePresenter {
 
     public TargetDymicPagePresenter load(){
         targetDymicPage.bindViewEvent(refreshListenerProvider(),clickListenerProvider(),adapterPresenter());
-        getFrendList();
+        if (pubTarget.size()==0)
+            getFrendList();
         return this;
     }
     private SwipeRefreshLayout.OnRefreshListener refreshListenerProvider(){
@@ -56,13 +62,13 @@ public class TargetDymicPagePresenter {
         return new TargetDymicRecAdt(targetDymicPage.getContext(),pubTarget);
     }
     private void getFrendList(){
+        pubTarget.clear();
         ContactManager.getFriendList(new GetUserInfoListCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage, List<UserInfo> userInfoList) {
                 if (0 == responseCode) {
                     //获取好友列表成功
                     targetDymicPage.closeFresh();
-                    Toast.makeText(targetDymicPage.getContext(), "查询到了好友列表"+userInfoList.size(), Toast.LENGTH_SHORT).show();
                     for (UserInfo user:userInfoList)
                         findTargets(user.getUserName());
                 } else {
@@ -77,15 +83,28 @@ public class TargetDymicPagePresenter {
             query.findObjects(new FindListener<User>() {
                 @Override
                 public void done(List<User> list, BmobException e) {
-                    Toast.makeText(targetDymicPage.getContext(), "用户"+list.get(0).getUsername(), Toast.LENGTH_SHORT).show();
                     if (list!=null&&e==null){
                         BmobQuery<Target> query = new BmobQuery<>();
                         query.addWhereEqualTo("publisher",list.get(0));
                         query.include("publisher");
                         BmobQuery<Target> query1 = new BmobQuery<>();
                         query.addWhereEqualTo("isPublic",true);
+
+                        String createdAt = DateUtils.getBeforeDay(-3);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date createdAtDate = null;
+                        try {
+                            createdAtDate = sdf.parse(createdAt);
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                        BmobDate bmobCreatedAtDate = new BmobDate(createdAtDate);
+                        BmobQuery<Target> targetsquery = new BmobQuery<>();
+                        targetsquery.addWhereGreaterThanOrEqualTo("createdAt", bmobCreatedAtDate);
+
                         List<BmobQuery<Target>> set=new ArrayList<>();
                         set.add(query);
+                        set.add(targetsquery);
                         set.add(query1);
                         BmobQuery<Target> query2=new BmobQuery<>();
                         query2.order("-createdAt");

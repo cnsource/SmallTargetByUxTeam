@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.UserInfo;
 import kotlin.ranges.UIntProgression;
 
@@ -55,14 +57,17 @@ public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
                 }
                 else{
                     if (list.get(0).getAvatarUri()!=null)
-                        Glide.with(context).load(UPYunUtils.getSourcePath("http://"+list.get(0).getAvatarUri())).error(R.drawable.aurora_headicon_default).into(holder.circleImageView);
+                        Glide.with(context).load("http://"+list.get(0).getAvatarUri()).error(R.drawable.aurora_headicon_default).into(holder.circleImageView);
                 }}
         });
-
+        final Conversation conversation = Conversation.createSingleConversation(users.get(position).getUserName(), null);
+        setTipCnt(conversation.getUnReadMsgCnt(),holder.unreadMsg);
+        conversation.getUnReadMsgCnt();
         holder.nickName.setText(users.get(position).getDisplayName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                conversation.resetUnreadCount();
             onclickListener.click(users.get(position).getUserName(),users.get(position).getDisplayName());
             }
 
@@ -78,7 +83,17 @@ public class FrendRecAdt extends RecyclerView.Adapter<FrendVH> {
     public void setOnclickListener(OnclickListener onclickListener) {
         this.onclickListener = onclickListener;
     }
+    private void setTipCnt(int cnt, TextView view){
+        view.setVisibility(View.VISIBLE);
+        if (cnt>99)
+            view.setText("99+");
+        else if (cnt>0)
+            view.setText(cnt+"");
+        else
+            view.setVisibility(View.INVISIBLE);
+    }
 }
+
 interface OnclickListener{
     void click(String username,String displayname);
 }

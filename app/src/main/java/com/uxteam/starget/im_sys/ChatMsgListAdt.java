@@ -29,6 +29,7 @@ public class ChatMsgListAdt extends RecyclerView.Adapter {
     private Context context;
     private List<Message> messages;
     private String username;
+    private String url;
 
     public ChatMsgListAdt(Context context, List<Message> messages, String username) {
 
@@ -52,7 +53,6 @@ public class ChatMsgListAdt extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final String[] url = {null};
         BmobQuery<User> query=new BmobQuery<>();
         query.addWhereEqualTo("username",username);
         query.findObjects(new FindListener<User>(){
@@ -63,11 +63,12 @@ public class ChatMsgListAdt extends RecyclerView.Adapter {
                 }
                 else{
                     if (list.get(0).getAvatarUri()!=null)
-                        url[0] ="http://"+list.get(0).getAvatarUri();
+                        url ="http://"+list.get(0).getAvatarUri();
+                    Log.i("聊天界面",url);
                 }}
         });
         if (getItemViewType(position)==0){
-            Glide.with(context).load(url[0]).error(R.drawable.aurora_headicon_default).into(((ChatMsgListReciverVH)holder).reciverHeadImg);
+            Glide.with(context).load(url).error(R.drawable.aurora_headicon_default).into(((ChatMsgListReciverVH)holder).reciverHeadImg);
             ((ChatMsgListReciverVH)holder).reciverMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));
         }else {
             ((ChatMsgListSenderVH)holder).senderMsgContent.setText(MsgUtils.getTextMsg(messages.get(position).toJson()));

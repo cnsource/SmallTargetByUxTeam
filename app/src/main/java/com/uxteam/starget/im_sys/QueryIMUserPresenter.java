@@ -51,6 +51,7 @@ public class QueryIMUserPresenter {
 
                     case R.id.addBtn:
                         addUser();
+
                         break;
                 }
             }
@@ -58,14 +59,17 @@ public class QueryIMUserPresenter {
     }
 
     private void addUser() {
+        queryIMUser.setBtnstate("添加为好友",true);
         ContactManager.sendInvitationRequest(user.getUsername(), null, "hello", new BasicCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage) {
                 if (0 == responseCode) {
                     //好友请求请求发送成功
+                    queryIMUser.setBtnstate("已发送好友请求",false);
                     Toast.makeText(queryIMUser, "添加好友请求已经发送，请耐心等待。", Toast.LENGTH_SHORT).show();
                 } else {
                     //好友请求发送失败
+                    queryIMUser.setBtnstate("已经是好友",false);
                     Toast.makeText(queryIMUser, "你们已经是好友了", Toast.LENGTH_SHORT).show();
                     Log.e("发送好友请求","失败："+responseMessage);
                 }

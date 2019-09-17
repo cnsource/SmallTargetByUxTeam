@@ -8,11 +8,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="22sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
         android:gravity="center"
         android:textColor="#333"
         android:id="@+id/text"
-        android:text="请选择一张证明本目标完成的图片以供审核"/>
+        android:text="提交学习笔记"/>
 
 <ImageView
     android:background="#aaa"
