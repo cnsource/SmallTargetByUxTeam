@@ -1,6 +1,7 @@
 package com.uxteam.starget.self_page;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 
 import com.uxteam.starget.R;
+import com.uxteam.starget.app_utils.AppVersion;
 import com.uxteam.starget.app_utils.CloudFuncationListener;
 import com.uxteam.starget.app_utils.MyBmobUtils;
 import com.uxteam.starget.bmob_sys_pkg.User;
@@ -19,14 +21,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.event.OfflineMessageEvent;
@@ -127,14 +133,52 @@ public class SelfPagePresenter {
                         selfPage.startActivity(new Intent(selfPage.getContext(), MyFrends.class));
                         break;
                     case 1:
+                            BmobQuery<AppVersion> query=new BmobQuery<>();
+                            query.addWhereEqualTo("objectId","cmf1BBBZ");
+                            query.findObjects(new FindListener<AppVersion>() {
+                                @Override
+                                public void done(List<AppVersion> list, BmobException e) {
+                                    if (e==null&&list!=null){
+                                        File file=new File(selfPage.getContext().getCacheDir()+File.separator+list.get(0).getVersionCode()+".txt");
+                                        if(!file.exists()){
+                                            Log.i("self测试","jinlai");
+                                            String s=file.getName().substring(0,1);
+                                            Log.i("self测试",s);
+                                            Log.i("self测试",list.get(0).getVersionUrl());
+                                            startIn(list.get(0).getVersionUrl());
+                                           }else{
+                                               Toast.makeText(selfPage.getContext(), "已经是最新版本", Toast.LENGTH_SHORT).show();
+                                           }
+                                            //abcd.txt
+
+                                    }
+                                }
+                            });
 
                         break;
                     case 2:
-
+                        BmobQuery<AppVersion> query2=new BmobQuery<>();
+                        query2.addWhereEqualTo("objectId","cmf1BBBZ");
+                        query2.findObjects(new FindListener<AppVersion>() {
+                            @Override
+                            public void done(List<AppVersion> list, BmobException e) {
+                                if (e==null&&list!=null){
+                                    startIn(list.get(0).getUseAgreement());
+                                }
+                            }
+                        });
                         break;
                 }
             }
         };
+    }
+
+    private void startIn(String url){
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        selfPage.startActivity(intent);
     }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void messageEvent(MessageEvent messageEvent) {

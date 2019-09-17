@@ -11,6 +11,8 @@ import com.mob.MobSDK;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+
 import cn.bmob.v3.Bmob;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.ContactNotifyEvent;
