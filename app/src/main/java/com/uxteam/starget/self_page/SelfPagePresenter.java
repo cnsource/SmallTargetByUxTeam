@@ -95,6 +95,7 @@ public class SelfPagePresenter {
     public void initdata() {
         items.clear();
         items.add(new SelfPageRecItem(R.drawable.ic_frends,"朋友列表",JMessageClient.getAllUnReadMsgCount()));
+        items.add(new SelfPageRecItem(R.drawable.ic_history,"历史目标",-1));
         items.add(new SelfPageRecItem(R.drawable.ic_version,"版本更新",-1));
         items.add(new SelfPageRecItem(R.drawable.ic_userprot,"使用协议",-1));
     }
@@ -132,7 +133,10 @@ public class SelfPagePresenter {
                     case 0:
                         selfPage.startActivity(new Intent(selfPage.getContext(), MyFrends.class));
                         break;
-                    case 1:
+                        case 1:
+                            selfPage.startActivity(new Intent(selfPage.getContext(),HistoryActivity.class));
+                            break;
+                    case 2:
                             BmobQuery<AppVersion> query=new BmobQuery<>();
                             query.addWhereEqualTo("objectId","cmf1BBBZ");
                             query.findObjects(new FindListener<AppVersion>() {
@@ -156,7 +160,7 @@ public class SelfPagePresenter {
                             });
 
                         break;
-                    case 2:
+                    case 3:
                         BmobQuery<AppVersion> query2=new BmobQuery<>();
                         query2.addWhereEqualTo("objectId","cmf1BBBZ");
                         query2.findObjects(new FindListener<AppVersion>() {

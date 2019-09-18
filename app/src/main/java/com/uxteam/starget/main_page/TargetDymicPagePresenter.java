@@ -12,6 +12,7 @@ import com.uxteam.starget.app_utils.DateUtils;
 import com.uxteam.starget.bmob_sys_pkg.Target;
 import com.uxteam.starget.bmob_sys_pkg.User;
 import com.uxteam.starget.formulation_targets.FormulationActivity;
+import com.uxteam.starget.self_page.HistoryActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -32,20 +34,37 @@ public class TargetDymicPagePresenter {
     private TargetDymicPage targetDymicPage;
     private List<String> pubName=new ArrayList<>();
     private List<Target> pubTarget=new ArrayList<>();
+    private HistoryActivity historyActivity;
+    private int state=0;
+
     public TargetDymicPagePresenter(TargetDymicPage targetDymicPage) {
         this.targetDymicPage = targetDymicPage;
     }
 
+    public TargetDymicPagePresenter(HistoryActivity historyActivity) {
+        state = 1;
+        this.historyActivity = historyActivity;
+    }
     public TargetDymicPagePresenter load(){
         targetDymicPage.bindViewEvent(refreshListenerProvider(),clickListenerProvider(),adapterPresenter());
         if (pubTarget.size()==0)
             getFrendList();
         return this;
     }
+    public TargetDymicPagePresenter loadHistory(){
+        historyActivity.bindViewEvent(refreshListenerProvider(),HistoryadapterPresenter());
+        if (pubTarget.size()==0)
+            findHistory();
+        return this;
+    }
+
     private SwipeRefreshLayout.OnRefreshListener refreshListenerProvider(){
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if (state==1)
+                    findHistory();
+                else
                 getFrendList();
             }
         };
@@ -61,6 +80,9 @@ public class TargetDymicPagePresenter {
     private RecyclerView.Adapter adapterPresenter(){
         return new TargetDymicRecAdt(targetDymicPage.getContext(),pubTarget);
     }
+    private RecyclerView.Adapter HistoryadapterPresenter(){
+        return new TargetDymicRecAdt(historyActivity,pubTarget);
+    }
     private void getFrendList(){
         pubTarget.clear();
         ContactManager.getFriendList(new GetUserInfoListCallback() {
@@ -73,6 +95,21 @@ public class TargetDymicPagePresenter {
                         findTargets(user.getUserName());
                 } else {
                     //获取好友列表失败
+                }
+            }
+        });
+    }
+    private void findHistory(){
+        BmobQuery<Target> query=new BmobQuery<>();
+        query.addWhereEqualTo("publisher", BmobUser.getCurrentUser(User.class));
+        query.findObjects(new FindListener<Target>() {
+            @Override
+            public void done(List<Target> list, BmobException e) {
+                if (list!=null&&e==null){
+                    pubTarget.clear();
+                    pubTarget.addAll(list);
+                    historyActivity.freshView();
+                    historyActivity.closeFresh();
                 }
             }
         });
