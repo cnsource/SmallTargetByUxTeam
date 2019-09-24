@@ -21,6 +21,7 @@ import com.upyun.library.listener.UpProgressListener;
 import com.upyun.library.utils.UpYunUtils;
 import com.uxteam.starget.R;
 import com.uxteam.starget.app_utils.DateUtils;
+
 import com.uxteam.starget.app_utils.UPYunUtils;
 import com.uxteam.starget.app_utils.UpLoadResultListener;
 import com.uxteam.starget.bmob_sys_pkg.User;
@@ -205,6 +206,7 @@ public class RegistePagePresenter implements View.OnClickListener {
     }
 
     private void upLoadHeadIcon() {
+
         if (file==null){
             Toast.makeText(registePageActivity, "您稍后可以继续上传头像", Toast.LENGTH_SHORT).show();
         }else {

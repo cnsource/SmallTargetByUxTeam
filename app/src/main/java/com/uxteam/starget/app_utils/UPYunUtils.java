@@ -20,6 +20,7 @@ public class UPYunUtils {
     public static final String PATH_TARGETS = "targets";
     public static final String PATH_HEAD = "head";
     public static final String PATH_AUDIT = "audit";
+    public static final String CloudPath = "http://small-target.test.upcdn.net/";
 
     public static final String JPG = "jpg";
     public static final String TXT = "txt";

@@ -79,6 +79,7 @@ public class PlanPagePresenter {
         BmobQuery<Target> query2 = new BmobQuery<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String createdAt = format.format(new Date()) + " 00:00:01";
+        Log.i("PPPPDateString",createdAt);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date createdAtDate = null;
         try {

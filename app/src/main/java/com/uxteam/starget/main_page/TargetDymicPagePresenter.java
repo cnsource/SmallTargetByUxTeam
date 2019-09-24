@@ -116,7 +116,7 @@ public class TargetDymicPagePresenter {
     }
     private void findTargets(String name){
             BmobQuery<User> query = new BmobQuery<>();
-            query.addWhereEqualTo("username",name);
+        query.addWhereEqualTo("username",name);
             query.findObjects(new FindListener<User>() {
                 @Override
                 public void done(List<User> list, BmobException e) {
@@ -151,6 +151,7 @@ public class TargetDymicPagePresenter {
                             public void done(List<Target> list, BmobException e) {
                                 if (e==null&&list!=null){
                                     pubTarget.addAll(list);
+                                    //Toast.makeText(targetDymicPage.getContext(), ""+list.size(), Toast.LENGTH_SHORT).show();
                                     targetDymicPage.freshView();
                                 }
                             }

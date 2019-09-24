@@ -63,7 +63,11 @@ public class SelfPage extends Fragment {
         loginOut.setOnClickListener(loginOutListener);
     }
     public void refreshView(){
-        recyclerView.getAdapter().notifyDataSetChanged();
+        try {
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }catch (Exception e){
+
+        }
     }
 
     @Override

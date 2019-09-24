@@ -32,7 +32,7 @@ public class TargetDymicPage extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_main_page, container, false);
         bindViewControl(view);
-        new TargetDymicPagePresenter(this).load();
+        new Persenter(this).load();
         return view;
     }
 
